@@ -563,7 +563,7 @@ export default function Portfolio() {
           textDecoration: "none", borderBottom: activePage === "home" ? "1.5px solid #1A1A1A" : "none",
           paddingBottom: 2,
         }}>Work</a>
-        <a href="https://linkedin.com/in/arijitchakraborty" target="_blank" rel="noopener noreferrer" style={{
+        <a href="https://www.linkedin.com/in/arijit-chakraborty-82b5594a/" target="_blank" rel="noopener noreferrer" style={{
           fontSize: 13, color: "#888", textDecoration: "none", fontWeight: 400, cursor: "pointer",
         }}>LinkedIn ↗</a>
         <a href="mailto:arijit.chakraborty.jobs@gmail.com" style={{
@@ -777,7 +777,7 @@ export default function Portfolio() {
       <span>© 2026 Arijit Chakraborty</span>
       <div style={{ display: "flex", gap: 24 }}>
         <a href="mailto:arijit.chakraborty.jobs@gmail.com" style={{ color: "#888", textDecoration: "none" }}>arijit.chakraborty.jobs@gmail.com</a>
-        <a href="https://linkedin.com/in/arijitchakraborty" target="_blank" rel="noopener noreferrer" style={{ color: "#888", textDecoration: "none" }}>LinkedIn ↗</a>
+        <a href="https://www.linkedin.com/in/arijit-chakraborty-82b5594a/" target="_blank" rel="noopener noreferrer" style={{ color: "#888", textDecoration: "none" }}>LinkedIn ↗</a>
       </div>
     </div>
   );
