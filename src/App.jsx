@@ -113,6 +113,19 @@ const CREATOR_EARNINGS_WEEKLY = [
   { week: "W4 May*", ads: 920, gifts: 1360, brands: 0, total: 2280, projected: true },
 ];
 
+const CREATOR_EARNINGS_DAILY = Array.from({ length: 30 }, (_, i) => {
+  const ads = 420 + Math.round(Math.random() * 140) + Math.floor(i * 6);
+  const gifts = 520 + Math.round(Math.random() * 160) + Math.floor(i * 7);
+  const brands = (i % 5 === 0 ? 180 + Math.round(Math.random() * 90) : 50 + Math.round(Math.random() * 80));
+  return {
+    day: `Apr ${i + 1}`,
+    ads,
+    gifts,
+    brands,
+    total: ads + gifts + brands,
+  };
+});
+
 const CREATOR_EARNINGS_PIE = [
   { name: "Ad Revenue", value: CREATOR_EARNINGS.adRevenue, color: SC.blue },
   { name: "Gift Income", value: CREATOR_EARNINGS.giftIncome, color: SC.gold },
@@ -120,14 +133,14 @@ const CREATOR_EARNINGS_PIE = [
 ];
 
 const CREATOR_TOP_VIDEOS = [
-  { id: 1, title: "Exam Results Day — Every Student Ever 😂", emoji: "🎬", views: 48200, earnings: 1240, engagement: 8.4, format: "Short Video", date: "Apr 28" },
-  { id: 2, title: "Monday Motivation: Never Give Up 💪", emoji: "🎥", views: 31500, earnings: 820, engagement: 5.2, format: "Short Video", date: "Apr 25" },
-  { id: 3, title: "When Mom Finds Your Phone at 2 AM", emoji: "🎬", views: 27800, earnings: 710, engagement: 7.1, format: "Short Video", date: "May 2" },
-  { id: 4, title: "Chai vs Coffee — The Ultimate Debate ☕", emoji: "📸", views: 22100, earnings: 580, engagement: 6.3, format: "Image Post", date: "Apr 30" },
-  { id: 5, title: "5 Things Only Indore People Understand", emoji: "🎬", views: 19400, earnings: 490, engagement: 9.1, format: "Short Video", date: "May 5" },
-  { id: 6, title: "Desi Wedding Dance Moves Tutorial 💃", emoji: "🎬", views: 16700, earnings: 420, engagement: 6.8, format: "Short Video", date: "Apr 22" },
-  { id: 7, title: "Motivational Quote — Believe in Yourself", emoji: "📝", views: 12300, earnings: 180, engagement: 3.2, format: "Text Post", date: "May 1" },
-  { id: 8, title: "Street Food of Indore — Sarafa Bazar 🍜", emoji: "📸", views: 14800, earnings: 390, engagement: 5.9, format: "Image Post", date: "Apr 18" },
+  { id: 1, title: "Exam Results Day — Every Student Ever 😂", emoji: "🎬", views: 48200, earnings: 1240, ads: 420, gifts: 620, brands: 200, engagement: 8.4, format: "Short Video", date: "Apr 28" },
+  { id: 2, title: "Monday Motivation: Never Give Up 💪", emoji: "🎥", views: 31500, earnings: 820, ads: 260, gifts: 420, brands: 140, engagement: 5.2, format: "Short Video", date: "Apr 25" },
+  { id: 3, title: "When Mom Finds Your Phone at 2 AM", emoji: "🎬", views: 27800, earnings: 710, ads: 190, gifts: 380, brands: 140, engagement: 7.1, format: "Short Video", date: "May 2" },
+  { id: 4, title: "Chai vs Coffee — The Ultimate Debate ☕", emoji: "📸", views: 22100, earnings: 580, ads: 150, gifts: 290, brands: 140, engagement: 6.3, format: "Image Post", date: "Apr 30" },
+  { id: 5, title: "5 Things Only Indore People Understand", emoji: "🎬", views: 19400, earnings: 490, ads: 110, gifts: 250, brands: 130, engagement: 9.1, format: "Short Video", date: "May 5" },
+  { id: 6, title: "Desi Wedding Dance Moves Tutorial 💃", emoji: "🎬", views: 16700, earnings: 420, ads: 130, gifts: 210, brands: 80, engagement: 6.8, format: "Short Video", date: "Apr 22" },
+  { id: 7, title: "Motivational Quote — Believe in Yourself", emoji: "📝", views: 12300, earnings: 180, ads: 60, gifts: 90, brands: 30, engagement: 3.2, format: "Text Post", date: "May 1" },
+  { id: 8, title: "Street Food of Indore — Sarafa Bazar 🍜", emoji: "📸", views: 14800, earnings: 390, ads: 100, gifts: 190, brands: 100, engagement: 5.9, format: "Image Post", date: "Apr 18" },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -149,6 +162,7 @@ function ShareChatDashboard() {
   const [activeTab,setActiveTab]=useState("overview");
   const [insightFilter,setInsightFilter]=useState("all");
   const [videoSort,setVideoSort]=useState("earnings");
+  const [trendResolution,setTrendResolution]=useState("weekly");
 
   const SCMetricCard=({label,value,delta,glow,icon})=>(
     <div style={{background:SC.card,border:`1px solid ${SC.border}`,borderRadius:14,padding:"18px 20px",position:"relative",overflow:"hidden"}}>
@@ -576,15 +590,44 @@ function ShareChatDashboard() {
 
         {/* Earnings Trend + Pie Chart */}
         <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 14 }}>
-          {/* Weekly Earnings Trend */}
+          {/* Daily/Weekly Earnings Trend */}
           <div style={{ background: SC.card, border: `1px solid ${SC.border}`, borderRadius: 14, padding: 20 }}>
-            <SH
-              title="Weekly Earnings Trend"
-              subtitle="Breakdown by source — dotted line = projected"
-              badge={{ text: "12 WEEKS", color: SC.goldGlow, textColor: SC.gold }}
-            />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 18 }}>
+              <SH
+                title="Earnings Trend"
+                subtitle="Daily or weekly view with projection line"
+                badge={{ text: trendResolution === "daily" ? "DAILY" : "WEEKLY", color: SC.goldGlow, textColor: SC.gold }}
+              />
+              <div style={{ display: "flex", gap: 8 }}>
+                {[
+                  { id: "daily", label: "Daily" },
+                  { id: "weekly", label: "Weekly" },
+                ].map(option => (
+                  <button
+                    key={option.id}
+                    onClick={() => setTrendResolution(option.id)}
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: 999,
+                      border: `1px solid ${SC.border}`,
+                      background: trendResolution === option.id ? SC.accent : SC.bg,
+                      color: trendResolution === option.id ? "#fff" : SC.textSecondary,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <ResponsiveContainer width="100%" height={260}>
-              <AreaChart data={CREATOR_EARNINGS_WEEKLY}>
+              <AreaChart data={(() => {
+                const data = trendResolution === "daily" ? CREATOR_EARNINGS_DAILY : CREATOR_EARNINGS_WEEKLY;
+                const avg = Math.round(data.reduce((sum, row) => sum + row.total, 0) / data.length);
+                return data.map(row => ({ ...row, avgProjection: avg }));
+              })()}>
                 <defs>
                   <linearGradient id="adsGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor={SC.blue} stopOpacity={0.3} />
@@ -596,7 +639,7 @@ function ShareChatDashboard() {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={SC.border} />
-                <XAxis dataKey="week" tick={{ fill: SC.textMuted, fontSize: 9 }} interval={0} angle={-25} textAnchor="end" height={45} />
+                <XAxis dataKey={trendResolution === "daily" ? "day" : "week"} tick={{ fill: SC.textMuted, fontSize: 9 }} interval={0} angle={trendResolution === "weekly" ? -25 : -15} textAnchor="end" height={trendResolution === "weekly" ? 45 : 35} />
                 <YAxis tick={{ fill: SC.textMuted, fontSize: 10 }} tickFormatter={v => `₹${v}`} />
                 <Tooltip
                   {...ChartTooltipStyle}
@@ -606,7 +649,7 @@ function ShareChatDashboard() {
                 <Area type="monotone" dataKey="ads" stackId="1" stroke={SC.blue} fill="url(#adsGrad)" strokeWidth={2} name="Ad Revenue" />
                 <Area type="monotone" dataKey="gifts" stackId="1" stroke={SC.gold} fill="url(#giftsGrad)" strokeWidth={2} name="Gift Income" />
                 <Area type="monotone" dataKey="brands" stackId="1" stroke={SC.purple} fill={SC.purpleGlow} strokeWidth={2} name="Brand Deals" />
-                <Line type="monotone" dataKey="total" stroke={SC.textPrimary} strokeWidth={2} strokeDasharray="6 3" dot={false} name="Total" />
+                <Line type="monotone" dataKey="avgProjection" stroke={SC.teal} strokeWidth={2} strokeDasharray="6 4" dot={false} name="30-day avg projection" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -678,7 +721,7 @@ function ShareChatDashboard() {
             <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "0 5px" }}>
               <thead>
                 <tr>
-                  {["#", "Content", "Format", "Date", "Views", "Earnings", "Eng. Rate"].map(h => (
+                  {["#", "Content", "Format", "Date", "Views", "Earnings", "Source Split", "Eng. Rate"].map(h => (
                     <th key={h} style={{
                       textAlign: h === "#" ? "center" : "left",
                       padding: "6px 12px", fontSize: 10, color: SC.textMuted,
@@ -688,7 +731,11 @@ function ShareChatDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {sortedVideos.map((vid, idx) => (
+                {sortedVideos.map((vid, idx) => {
+                  const adsPct = Math.round((vid.ads / vid.earnings) * 100);
+                  const giftsPct = Math.round((vid.gifts / vid.earnings) * 100);
+                  const brandsPct = 100 - adsPct - giftsPct;
+                  return (
                   <tr key={vid.id} style={{ background: SC.bg }}>
                     <td style={{
                       padding: "10px 12px", borderRadius: "8px 0 0 8px", textAlign: "center",
@@ -721,6 +768,19 @@ function ShareChatDashboard() {
                     <td style={{ padding: "10px 12px", fontSize: 13, color: SC.gold, fontWeight: 700 }}>
                       ₹{vid.earnings.toLocaleString()}
                     </td>
+                    <td style={{ padding: "10px 12px", minWidth: 220 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <div style={{ flex: 1, display: "flex", height: 10, background: SC.border, borderRadius: 6, overflow: "hidden" }}>
+                          <div style={{ width: `${adsPct}%`, background: SC.blue }} />
+                          <div style={{ width: `${giftsPct}%`, background: SC.gold }} />
+                          <div style={{ width: `${brandsPct}%`, background: SC.purple }} />
+                        </div>
+                        <span style={{ fontSize: 11, color: SC.textSecondary, minWidth: 72, textAlign: "right" }}>
+                          {`${adsPct}% / ${giftsPct}% / ${brandsPct}%`}
+                        </span>
+                      </div>
+                      <div style={{ fontSize: 10, color: SC.textMuted, marginTop: 4 }}>Ads / Gifts / Brands</div>
+                    </td>
                     <td style={{ padding: "10px 12px", borderRadius: "0 8px 8px 0" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                         <div style={{
@@ -738,7 +798,8 @@ function ShareChatDashboard() {
                       </div>
                     </td>
                   </tr>
-                ))}
+                );
+              })}
               </tbody>
             </table>
           </div>
