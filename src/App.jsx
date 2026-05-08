@@ -72,6 +72,66 @@ const aiInsights=[
   {id:5,severity:"low",module:"Feed",insight:"Video completion rate for devotional content is 89% (vs 54% avg) but zero gifting integration exists on this content type.",action:"Add 'Bless with Gift' CTA on devotional content with ₹1 micro-gift option",impact:"~₹40L/month new revenue"},
 ];
 
+// ═══════════════════════════════════════════════════════════════════════════
+// CREATOR VIEW — Mock data for individual creator dashboard (Sprint 1)
+// ═══════════════════════════════════════════════════════════════════════════
+const CREATOR_PROFILE = {
+  name: "Priya Sharma",
+  handle: "@priyacomedy",
+  language: "Hindi",
+  city: "Indore",
+  followers: 45200,
+  following: 312,
+  totalPosts: 284,
+  joinedDate: "Sep 2024",
+  tier: "Micro (1-10K → 10-100K)",
+  avatarEmoji: "👩‍🎨",
+};
+
+const CREATOR_EARNINGS = {
+  totalThisMonth: 8470,
+  totalLastMonth: 6890,
+  adRevenue: 3200,
+  giftIncome: 4120,
+  brandDeals: 1150,
+  coinBonuses: 0,
+};
+
+const CREATOR_EARNINGS_WEEKLY = [
+  { week: "W1 Mar", ads: 620, gifts: 780, brands: 0, total: 1400 },
+  { week: "W2 Mar", ads: 710, gifts: 920, brands: 0, total: 1630 },
+  { week: "W3 Mar", ads: 680, gifts: 850, brands: 500, total: 2030 },
+  { week: "W4 Mar", ads: 750, gifts: 1040, brands: 0, total: 1790 },
+  { week: "W1 Apr", ads: 800, gifts: 1100, brands: 0, total: 1900 },
+  { week: "W2 Apr", ads: 820, gifts: 980, brands: 650, total: 2450 },
+  { week: "W3 Apr", ads: 790, gifts: 1060, brands: 0, total: 1850 },
+  { week: "W4 Apr", ads: 810, gifts: 1120, brands: 500, total: 2430 },
+  { week: "W1 May", ads: 850, gifts: 1200, brands: 0, total: 2050 },
+  { week: "W2 May", ads: 880, gifts: 1280, brands: 0, total: 2160 },
+  // Projected weeks
+  { week: "W3 May*", ads: 900, gifts: 1320, brands: 300, total: 2520, projected: true },
+  { week: "W4 May*", ads: 920, gifts: 1360, brands: 0, total: 2280, projected: true },
+];
+
+const CREATOR_EARNINGS_PIE = [
+  { name: "Ad Revenue", value: CREATOR_EARNINGS.adRevenue, color: SC.blue },
+  { name: "Gift Income", value: CREATOR_EARNINGS.giftIncome, color: SC.gold },
+  { name: "Brand Deals", value: CREATOR_EARNINGS.brandDeals, color: SC.purple },
+];
+
+const CREATOR_TOP_VIDEOS = [
+  { id: 1, title: "Exam Results Day — Every Student Ever 😂", emoji: "🎬", views: 48200, earnings: 1240, engagement: 8.4, format: "Short Video", date: "Apr 28" },
+  { id: 2, title: "Monday Motivation: Never Give Up 💪", emoji: "🎥", views: 31500, earnings: 820, engagement: 5.2, format: "Short Video", date: "Apr 25" },
+  { id: 3, title: "When Mom Finds Your Phone at 2 AM", emoji: "🎬", views: 27800, earnings: 710, engagement: 7.1, format: "Short Video", date: "May 2" },
+  { id: 4, title: "Chai vs Coffee — The Ultimate Debate ☕", emoji: "📸", views: 22100, earnings: 580, engagement: 6.3, format: "Image Post", date: "Apr 30" },
+  { id: 5, title: "5 Things Only Indore People Understand", emoji: "🎬", views: 19400, earnings: 490, engagement: 9.1, format: "Short Video", date: "May 5" },
+  { id: 6, title: "Desi Wedding Dance Moves Tutorial 💃", emoji: "🎬", views: 16700, earnings: 420, engagement: 6.8, format: "Short Video", date: "Apr 22" },
+  { id: 7, title: "Motivational Quote — Believe in Yourself", emoji: "📝", views: 12300, earnings: 180, engagement: 3.2, format: "Text Post", date: "May 1" },
+  { id: 8, title: "Street Food of Indore — Sarafa Bazar 🍜", emoji: "📸", views: 14800, earnings: 390, engagement: 5.9, format: "Image Post", date: "Apr 18" },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+
 const ChartTooltipStyle={
   contentStyle:{background:"#1A1A28",border:`1px solid ${SC.border}`,borderRadius:10,fontSize:12,color:SC.textPrimary,boxShadow:"0 8px 32px rgba(0,0,0,0.4)"},
   itemStyle:{color:SC.textSecondary},labelStyle:{color:SC.textPrimary,fontWeight:600},
@@ -81,12 +141,14 @@ const TABS=[
   {id:"overview",label:"Overview",icon:"📊"},{id:"feed",label:"Feed & Ranking",icon:"📱"},
   {id:"chatrooms",label:"Chatrooms",icon:"💬"},{id:"creators",label:"Creator Tools",icon:"🎨"},
   {id:"gifting",label:"Gifting",icon:"🎁"},{id:"insights",label:"AI Insights",icon:"🧠"},
+  {id:"creator-view",label:"Creator View",icon:"👤"},
 ];
 
 // ── ShareChat Dashboard Component ──
 function ShareChatDashboard() {
   const [activeTab,setActiveTab]=useState("overview");
   const [insightFilter,setInsightFilter]=useState("all");
+  const [videoSort,setVideoSort]=useState("earnings");
 
   const SCMetricCard=({label,value,delta,glow,icon})=>(
     <div style={{background:SC.card,border:`1px solid ${SC.border}`,borderRadius:14,padding:"18px 20px",position:"relative",overflow:"hidden"}}>
@@ -417,10 +479,310 @@ function ShareChatDashboard() {
     );
   };
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SPRINT 1: CREATOR VIEW — Earnings Dashboard
+  // ═══════════════════════════════════════════════════════════════════════════
+  const renderCreatorView = () => {
+    const earningsDelta = CREATOR_EARNINGS.totalThisMonth - CREATOR_EARNINGS.totalLastMonth;
+    const earningsDeltaPct = ((earningsDelta / CREATOR_EARNINGS.totalLastMonth) * 100).toFixed(1);
+
+    const sortedVideos = [...CREATOR_TOP_VIDEOS].sort((a, b) => {
+      if (videoSort === "earnings") return b.earnings - a.earnings;
+      if (videoSort === "views") return b.views - a.views;
+      if (videoSort === "engagement") return b.engagement - a.engagement;
+      return 0;
+    });
+
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        {/* Creator Profile Header */}
+        <div style={{
+          background: `linear-gradient(135deg, ${SC.card} 0%, rgba(124,92,252,0.08) 100%)`,
+          border: `1px solid ${SC.border}`, borderRadius: 14, padding: "20px 24px",
+          display: "flex", alignItems: "center", gap: 20,
+        }}>
+          <div style={{
+            width: 64, height: 64, borderRadius: 16,
+            background: `linear-gradient(135deg, ${SC.accent}, ${SC.purple})`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 32, flexShrink: 0,
+            boxShadow: `0 4px 20px rgba(124,92,252,0.3)`,
+          }}>
+            {CREATOR_PROFILE.avatarEmoji}
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+              <span style={{ fontSize: 20, fontWeight: 800, color: SC.textPrimary }}>{CREATOR_PROFILE.name}</span>
+              <span style={{
+                fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4,
+                background: SC.purpleGlow, color: SC.purple,
+              }}>{CREATOR_PROFILE.tier}</span>
+            </div>
+            <div style={{ fontSize: 13, color: SC.textSecondary, marginBottom: 6 }}>
+              {CREATOR_PROFILE.handle} · {CREATOR_PROFILE.language} · {CREATOR_PROFILE.city}
+            </div>
+            <div style={{ display: "flex", gap: 20 }}>
+              {[
+                { label: "Followers", value: CREATOR_PROFILE.followers.toLocaleString() },
+                { label: "Posts", value: CREATOR_PROFILE.totalPosts },
+                { label: "Joined", value: CREATOR_PROFILE.joinedDate },
+              ].map(s => (
+                <div key={s.label} style={{ display: "flex", gap: 6, alignItems: "baseline" }}>
+                  <span style={{ fontSize: 15, fontWeight: 700, color: SC.textPrimary }}>{s.value}</span>
+                  <span style={{ fontSize: 10, color: SC.textMuted, textTransform: "uppercase", letterSpacing: 0.5 }}>{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{
+            background: SC.bg, borderRadius: 12, padding: "14px 20px",
+            border: `1px solid ${SC.border}`, textAlign: "center", flexShrink: 0,
+          }}>
+            <div style={{ fontSize: 10, color: SC.textMuted, textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>
+              This Month
+            </div>
+            <div style={{ fontSize: 28, fontWeight: 800, color: SC.gold }}>
+              ₹{CREATOR_EARNINGS.totalThisMonth.toLocaleString()}
+            </div>
+            <div style={{ fontSize: 11, color: SC.teal, fontWeight: 700, marginTop: 2 }}>
+              +{earningsDeltaPct}% vs last month
+            </div>
+          </div>
+        </div>
+
+        {/* Earnings by Source — 4 Cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
+          <SCMetricCard
+            icon="📺" label="Ad Revenue" value={`₹${CREATOR_EARNINGS.adRevenue.toLocaleString()}`}
+            delta={`+${((CREATOR_EARNINGS.adRevenue / CREATOR_EARNINGS.totalThisMonth) * 100).toFixed(0)}% of total`}
+            glow={SC.purpleGlow}
+          />
+          <SCMetricCard
+            icon="🎁" label="Gift Income" value={`₹${CREATOR_EARNINGS.giftIncome.toLocaleString()}`}
+            delta={`+${((CREATOR_EARNINGS.giftIncome / CREATOR_EARNINGS.totalThisMonth) * 100).toFixed(0)}% of total`}
+            glow={SC.goldGlow}
+          />
+          <SCMetricCard
+            icon="🤝" label="Brand Deals" value={`₹${CREATOR_EARNINGS.brandDeals.toLocaleString()}`}
+            delta={`+${((CREATOR_EARNINGS.brandDeals / CREATOR_EARNINGS.totalThisMonth) * 100).toFixed(0)}% of total`}
+            glow={SC.tealGlow}
+          />
+          <SCMetricCard
+            icon="🪙" label="Coin Bonuses" value={`₹${CREATOR_EARNINGS.coinBonuses.toLocaleString()}`}
+            delta="Platform rewards"
+            glow={SC.accentGlow}
+          />
+        </div>
+
+        {/* Earnings Trend + Pie Chart */}
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 14 }}>
+          {/* Weekly Earnings Trend */}
+          <div style={{ background: SC.card, border: `1px solid ${SC.border}`, borderRadius: 14, padding: 20 }}>
+            <SH
+              title="Weekly Earnings Trend"
+              subtitle="Breakdown by source — dotted line = projected"
+              badge={{ text: "12 WEEKS", color: SC.goldGlow, textColor: SC.gold }}
+            />
+            <ResponsiveContainer width="100%" height={260}>
+              <AreaChart data={CREATOR_EARNINGS_WEEKLY}>
+                <defs>
+                  <linearGradient id="adsGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={SC.blue} stopOpacity={0.3} />
+                    <stop offset="100%" stopColor={SC.blue} stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="giftsGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={SC.gold} stopOpacity={0.3} />
+                    <stop offset="100%" stopColor={SC.gold} stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke={SC.border} />
+                <XAxis dataKey="week" tick={{ fill: SC.textMuted, fontSize: 9 }} interval={0} angle={-25} textAnchor="end" height={45} />
+                <YAxis tick={{ fill: SC.textMuted, fontSize: 10 }} tickFormatter={v => `₹${v}`} />
+                <Tooltip
+                  {...ChartTooltipStyle}
+                  formatter={(value, name) => [`₹${value}`, name]}
+                />
+                <Legend wrapperStyle={{ fontSize: 11, color: SC.textSecondary }} />
+                <Area type="monotone" dataKey="ads" stackId="1" stroke={SC.blue} fill="url(#adsGrad)" strokeWidth={2} name="Ad Revenue" />
+                <Area type="monotone" dataKey="gifts" stackId="1" stroke={SC.gold} fill="url(#giftsGrad)" strokeWidth={2} name="Gift Income" />
+                <Area type="monotone" dataKey="brands" stackId="1" stroke={SC.purple} fill={SC.purpleGlow} strokeWidth={2} name="Brand Deals" />
+                <Line type="monotone" dataKey="total" stroke={SC.textPrimary} strokeWidth={2} strokeDasharray="6 3" dot={false} name="Total" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Earnings Breakdown Pie */}
+          <div style={{ background: SC.card, border: `1px solid ${SC.border}`, borderRadius: 14, padding: 20 }}>
+            <SH title="Revenue Split" subtitle="This month by source" />
+            <ResponsiveContainer width="100%" height={180}>
+              <PieChart>
+                <Pie
+                  data={CREATOR_EARNINGS_PIE}
+                  cx="50%" cy="50%"
+                  innerRadius={50} outerRadius={75}
+                  paddingAngle={4}
+                  dataKey="value"
+                  strokeWidth={0}
+                >
+                  {CREATOR_EARNINGS_PIE.map((entry, i) => (
+                    <Cell key={i} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  {...ChartTooltipStyle}
+                  formatter={(value) => [`₹${value.toLocaleString()}`, "Revenue"]}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 8 }}>
+              {CREATOR_EARNINGS_PIE.map(e => (
+                <div key={e.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: 3, background: e.color }} />
+                    <span style={{ fontSize: 12, color: SC.textSecondary }}>{e.name}</span>
+                  </div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: SC.textPrimary }}>₹{e.value.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Top Videos by Earnings */}
+        <div style={{ background: SC.card, border: `1px solid ${SC.border}`, borderRadius: 14, padding: 20 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <SH title="Top Content by Earnings" subtitle="Tap column headers to sort" />
+            <div style={{ display: "flex", gap: 6 }}>
+              {[
+                { key: "earnings", label: "Earnings" },
+                { key: "views", label: "Views" },
+                { key: "engagement", label: "Engagement" },
+              ].map(s => (
+                <button
+                  key={s.key}
+                  onClick={() => setVideoSort(s.key)}
+                  style={{
+                    padding: "4px 12px", borderRadius: 6,
+                    border: `1px solid ${SC.border}`,
+                    background: videoSort === s.key ? SC.accent : SC.bg,
+                    color: videoSort === s.key ? "#fff" : SC.textSecondary,
+                    fontSize: 11, fontWeight: 600, cursor: "pointer",
+                  }}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "0 5px" }}>
+              <thead>
+                <tr>
+                  {["#", "Content", "Format", "Date", "Views", "Earnings", "Eng. Rate"].map(h => (
+                    <th key={h} style={{
+                      textAlign: h === "#" ? "center" : "left",
+                      padding: "6px 12px", fontSize: 10, color: SC.textMuted,
+                      textTransform: "uppercase", letterSpacing: 0.8, fontWeight: 600,
+                    }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {sortedVideos.map((vid, idx) => (
+                  <tr key={vid.id} style={{ background: SC.bg }}>
+                    <td style={{
+                      padding: "10px 12px", borderRadius: "8px 0 0 8px", textAlign: "center",
+                      color: idx < 3 ? SC.gold : SC.textMuted, fontWeight: 800, fontSize: 14,
+                    }}>
+                      {idx + 1}
+                    </td>
+                    <td style={{ padding: "10px 12px", maxWidth: 260 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ fontSize: 18 }}>{vid.emoji}</span>
+                        <span style={{
+                          fontSize: 12, fontWeight: 600, color: SC.textPrimary,
+                          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                        }}>{vid.title}</span>
+                      </div>
+                    </td>
+                    <td style={{ padding: "10px 12px" }}>
+                      <span style={{
+                        fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 4,
+                        background: vid.format === "Short Video" ? SC.accentGlow
+                          : vid.format === "Image Post" ? SC.purpleGlow : SC.tealGlow,
+                        color: vid.format === "Short Video" ? SC.accent
+                          : vid.format === "Image Post" ? SC.purple : SC.teal,
+                      }}>{vid.format}</span>
+                    </td>
+                    <td style={{ padding: "10px 12px", fontSize: 11, color: SC.textMuted }}>{vid.date}</td>
+                    <td style={{ padding: "10px 12px", fontSize: 13, color: SC.textSecondary, fontWeight: 600 }}>
+                      {vid.views >= 1000 ? `${(vid.views / 1000).toFixed(1)}K` : vid.views}
+                    </td>
+                    <td style={{ padding: "10px 12px", fontSize: 13, color: SC.gold, fontWeight: 700 }}>
+                      ₹{vid.earnings.toLocaleString()}
+                    </td>
+                    <td style={{ padding: "10px 12px", borderRadius: "0 8px 8px 0" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <div style={{
+                          flex: 1, height: 5, background: SC.border, borderRadius: 3, overflow: "hidden", maxWidth: 60,
+                        }}>
+                          <div style={{
+                            width: `${(vid.engagement / 10) * 100}%`, height: "100%", borderRadius: 3,
+                            background: vid.engagement > 7 ? SC.teal : vid.engagement > 5 ? SC.gold : SC.accent,
+                          }} />
+                        </div>
+                        <span style={{
+                          fontSize: 12, fontWeight: 600, minWidth: 32,
+                          color: vid.engagement > 7 ? SC.teal : vid.engagement > 5 ? SC.gold : SC.accent,
+                        }}>{vid.engagement}%</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* PRD Context Note */}
+        <div style={{
+          background: `linear-gradient(135deg, rgba(124,92,252,0.06) 0%, rgba(0,212,170,0.06) 100%)`,
+          border: `1px solid ${SC.border}`, borderRadius: 14, padding: "16px 20px",
+          display: "flex", alignItems: "flex-start", gap: 12,
+        }}>
+          <span style={{ fontSize: 20 }}>📋</span>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: SC.textPrimary, marginBottom: 4 }}>
+              About This View
+            </div>
+            <div style={{ fontSize: 12, color: SC.textSecondary, lineHeight: 1.7 }}>
+              This Creator View implements Sprint 1 of the <strong style={{ color: SC.purple }}>Creator Command Center PRD</strong> — an
+              individual creator's analytics and earnings intelligence dashboard. Unlike the platform-level tabs (Overview, Feed, etc.)
+              which serve internal PMs, this view is designed for <strong style={{ color: SC.gold }}>the creator themselves</strong> — giving
+              them visibility into their earnings, content performance, and growth. Upcoming sprints will add audience demographics,
+              best-time-to-post heatmaps, agency safety scores, and exportable brand pitch reports.
+            </div>
+            <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+              {["Sprint 1: Earnings ✅", "Sprint 2: Trends", "Sprint 3: Content", "Sprint 4: Heatmap", "Sprint 5: Audience", "Sprint 6: Safety", "Sprint 7: Export", "Sprint 8: Polish"].map((s, i) => (
+                <span key={s} style={{
+                  fontSize: 10, fontWeight: 600, padding: "3px 8px", borderRadius: 4,
+                  background: i === 0 ? SC.tealGlow : SC.bg,
+                  color: i === 0 ? SC.teal : SC.textMuted,
+                  border: `1px solid ${i === 0 ? "transparent" : SC.border}`,
+                }}>{s}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderContent=()=>{
     switch(activeTab){
       case"overview":return renderOverview();case"feed":return renderFeed();case"chatrooms":return renderChatrooms();
       case"creators":return renderCreators();case"gifting":return renderGifting();case"insights":return renderInsights();
+      case"creator-view":return renderCreatorView();
       default:return renderOverview();
     }
   };
@@ -470,12 +832,12 @@ const PORTFOLIO_PROJECTS = [
     subtitle: "Creator Growth × Gifting × Feed Optimization — an interactive analytics dashboard and product strategy tool",
     tags: ["B2C Social", "Feed Ranking", "Virtual Gifting", "Creator Economy", "India"],
     date: "May 2026",
-    description: "A full-stack product thinking exercise across ShareChat's core modules. Covers DAU/engagement analytics, language-wise ARPU analysis, gifting conversion funnels, creator tier health, chatroom battle-mode UX, and 5 data-driven experiment proposals with projected revenue impact.",
+    description: "A full-stack product thinking exercise across ShareChat's core modules. Covers DAU/engagement analytics, language-wise ARPU analysis, gifting conversion funnels, creator tier health, chatroom battle-mode UX, and 5 data-driven experiment proposals with projected revenue impact. Includes a Creator View dashboard — an individual creator's earnings and performance analytics tool built from a PRD grounded in real user pain points.",
     highlights: [
       "Gifting conversion funnel — identified 72% drop at UPI payment step for Tier-3 users",
       "Feed ranking A/B test PRD with hypothesis, variants, metrics, and guardrails",
       "Creator lifecycle redesign — Day 0 to Day 7 intervention plan to fix 66% nano-creator churn",
-      "₹1 micro-gift experiment targeting Tier-3 gift penetration from 1.8% → 5%",
+      "Creator View: individual earnings dashboard with per-video breakdown and revenue split (PRD Sprint 1)",
     ],
     type: "interactive",
   },
