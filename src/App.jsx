@@ -1006,7 +1006,7 @@ export default function Portfolio() {
       <div style={{
         fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase",
         color: "#999", marginBottom: 20,
-      }}>Product Builder</div>
+      }}>Product Manager</div>
       <h1 style={{
         fontSize: 52, fontWeight: 300, lineHeight: 1.15, margin: 0,
         fontFamily: "'Newsreader', serif", color: "#1A1A1A", letterSpacing: -1.5,
