@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Sprint1RevenueOverview from "./components/Sprint1RevenueOverview";
 import Sprint2StockoutTracker from "./components/Sprint2StockoutTracker";
+import Sprint3PricingGaps from "./components/Sprint3PricingGaps";
+import Sprint4AdWaste from "./components/Sprint4AdWaste";
+import Sprint5VisibilityLoss from "./components/Sprint5VisibilityLoss";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -84,8 +87,11 @@ export default function App() {
           }}
         >
           {[
-            { key: "overview", label: "Sprint 1 · Revenue Overview" },
-            { key: "stockout", label: "Sprint 2 · Stockout Tracker" },
+            { key: "overview", label: "S1 · Revenue" },
+            { key: "stockout", label: "S2 · Stockouts" },
+            { key: "pricing", label: "S3 · Pricing" },
+            { key: "adwaste", label: "S4 · Ad Waste" },
+            { key: "visibility", label: "S5 · Visibility" },
           ].map((t) => (
             <button
               key={t.key}
@@ -125,6 +131,9 @@ export default function App() {
       <main style={{ padding: "24px 32px", maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
         {activeTab === "overview" && <Sprint1RevenueOverview loaded={loaded} />}
         {activeTab === "stockout" && <Sprint2StockoutTracker loaded={loaded} />}
+        {activeTab === "pricing" && <Sprint3PricingGaps loaded={loaded} />}
+        {activeTab === "adwaste" && <Sprint4AdWaste loaded={loaded} />}
+        {activeTab === "visibility" && <Sprint5VisibilityLoss loaded={loaded} />}
       </main>
 
       {/* ── Footer ───────────────────────────────────────────── */}
@@ -140,7 +149,7 @@ export default function App() {
         }}
       >
         <span>GobbleCube Revenue Leak Detector · FreshGlow Skincare · Mock Data</span>
-        <span>Sprints 1 &amp; 2 · Milestone: GobbleCube Revenue Leak Detector</span>
+        <span>Sprints 1–5 · Milestone: GobbleCube Revenue Leak Detector</span>
       </footer>
     </div>
   );
