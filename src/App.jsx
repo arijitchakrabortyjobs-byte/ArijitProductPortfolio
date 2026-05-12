@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import * as recharts from "recharts";
+import GobbleCubeDashboard from "./gobblecube/GobbleCubeDashboard";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -903,14 +904,20 @@ const PORTFOLIO_PROJECTS = [
     type: "interactive",
   },
   {
-    id: "coming-1",
-    title: "Coming Soon",
-    subtitle: "Next portfolio piece — building in public",
-    tags: ["In Progress"],
-    date: "",
-    description: "New product case study in development. Check back soon.",
-    highlights: [],
-    type: "placeholder",
+    id: "gobblecube",
+    title: "GobbleCube Revenue Leak Detector",
+    subtitle: "B2B revenue intelligence for FMCG brands — tracking stockouts, pricing gaps, ad waste & visibility loss across Blinkit, Zepto, Amazon, Flipkart",
+    tags: ["B2B SaaS", "FMCG / CPG", "Revenue Intelligence", "Quick Commerce", "India"],
+    date: "May 2026",
+    description: "A 5-sprint product build for GobbleCube — a B2B platform that helps FMCG brands detect and recover revenue leaks across India's top e-commerce and quick-commerce channels. Built as a take-home for the AI Builder role, this dashboard covers the full Revenue Leak taxonomy: stockout detection with wasted ad-spend correlation, competitive pricing intelligence, ad efficiency tracking with ROAS analysis, and search visibility monitoring with keyword rankings.",
+    highlights: [
+      "Sprint 1: Revenue overview with KPI strip, leak breakdown by category, and 8-week trend analysis",
+      "Sprint 2: City-level stockout heatmap with OOS severity badges, wasted ad-spend alerts, and SKU drill-down",
+      "Sprint 3: Competitive pricing gaps — undercut detection, lost sales estimation, and per-platform competitor price maps",
+      "Sprint 4: Ad waste tracker — ROAS badges, ad type performance (Sponsored/Display/Brand/Video), SKU×Channel waste heatmap",
+      "Sprint 5: Visibility loss — search rank radar, keyword rankings, share of shelf, buy box win rate scorecards",
+    ],
+    type: "interactive",
   },
 ];
 
@@ -1066,18 +1073,25 @@ export default function Portfolio() {
           }}>
             <div style={{
               position: "absolute", inset: 0,
-              background: "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
+              background: project.id === "gobblecube"
+                ? "linear-gradient(135deg, rgba(123,47,247,0.1) 0%, rgba(6,182,212,0.08) 50%, rgba(245,158,11,0.05) 100%)"
+                : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
               padding: 20, width: "90%", opacity: 0.85,
             }}>
-              {[
+              {(project.id === "gobblecube" ? [
+                { label: "Revenue", value: "₹83L", color: "#22C55E" },
+                { label: "Leaks", value: "₹12L", color: "#EF4444" },
+                { label: "Channels", value: "4", color: "#7B2FF7" },
+                { label: "Sprints", value: "5", color: "#06B6D4" },
+              ] : [
                 { label: "DAU", value: "31.2M", color: "#FF4D67" },
                 { label: "Gift Rev", value: "₹94Cr", color: "#FFB830" },
                 { label: "Creators", value: "1.38M", color: "#7C5CFC" },
                 { label: "Sessions", value: "1.02M", color: "#00D4AA" },
-              ].map(m => (
+              ]).map(m => (
                 <div key={m.label} style={{
                   background: "rgba(18,18,26,0.8)", borderRadius: 8, padding: "10px 12px",
                   border: "1px solid rgba(255,255,255,0.06)",
@@ -1270,7 +1284,8 @@ export default function Portfolio() {
             fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase",
             color: "#BBB", marginBottom: 14,
           }}>Interactive Dashboard</div>
-          <ShareChatDashboard />
+          {project.id === "sharechat" && <ShareChatDashboard />}
+          {project.id === "gobblecube" && <GobbleCubeDashboard />}
         </div>
       </div>
     );
