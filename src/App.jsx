@@ -1005,43 +1005,67 @@ export default function Portfolio() {
     </div>
   );
 
-  const renderHero = () => (
+  const renderTopRow = () => (
     <div style={{
-      padding: "80px 48px 60px",
-      maxWidth: 720,
+      padding: "72px 96px 60px",
+      display: "flex",
+      gap: 80,
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexWrap: "wrap",
     }}>
       <div style={{
-        fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase",
-        color: "#999", marginBottom: 20,
-      }}>Product Manager</div>
-      <h1 style={{
-        fontSize: 52, fontWeight: 300, lineHeight: 1.15, margin: 0,
-        fontFamily: "'Newsreader', serif", color: "#1A1A1A", letterSpacing: -1.5,
+        flex: "0 1 400px", minWidth: 260,
+        display: "flex", flexDirection: "column", alignItems: "flex-start",
       }}>
-        I turn <em style={{ fontWeight: 600, fontStyle: "italic" }}>ambiguous problems</em> into{" "}
-        <span style={{ color: "#666" }}>shipped products.</span>
-      </h1>
-      <p style={{
-        fontSize: 17, lineHeight: 1.7, color: "#666", marginTop: 24,
-        maxWidth: 560, fontWeight: 400,
-      }}>
-        11+ years across SaaS, CRM, and consumer platforms. I prototype with AI tools,
-        validate with data, and ship with engineering teams. Currently exploring B2C product roles
-        building for Bharat.
-      </p>
-      <div style={{ display: "flex", gap: 16, marginTop: 32 }}>
+        <img
+          src="/arijit-headshot.png"
+          alt="Arijit Chakraborty"
+          style={{
+            width: 220, height: 220, borderRadius: "50%",
+            objectFit: "cover", border: "4px solid #fff",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
+          }}
+        />
+        <p style={{
+          fontSize: 15, lineHeight: 1.7, color: "#555",
+          marginTop: 24, fontWeight: 400,
+        }}>
+          I'm <strong style={{ color: "#1A1A1A" }}>Arijit Chakraborty</strong> — a product manager
+          who blends customer empathy with AI-native prototyping. I move fast from problem to
+          shipped product, partnering closely with engineering, design, and data teams along the way.
+        </p>
+      </div>
+      <div style={{ flex: "1 1 480px", maxWidth: 600 }}>
         <div style={{
-          padding: "8px 16px", borderRadius: 6, background: "#F0F0EC",
-          fontSize: 12, color: "#555", fontWeight: 500,
-        }}>🇮🇳 Based in Hyderabad</div>
-        <div style={{
-          padding: "8px 16px", borderRadius: 6, background: "#F0F0EC",
-          fontSize: 12, color: "#555", fontWeight: 500,
-        }}>🧠 AI-native builder</div>
-        <div style={{
-          padding: "8px 16px", borderRadius: 6, background: "#F0F0EC",
-          fontSize: 12, color: "#555", fontWeight: 500,
-        }}>📊 SQL + Python proficient</div>
+          fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase",
+          color: "#999", marginBottom: 20,
+        }}>Product Manager</div>
+        <h1 style={{
+          fontSize: 52, fontWeight: 300, lineHeight: 1.15, margin: 0,
+          fontFamily: "'Newsreader', serif", color: "#1A1A1A", letterSpacing: -1.5,
+        }}>
+          I turn <em style={{ fontWeight: 600, fontStyle: "italic" }}>ambiguous problems</em> into{" "}
+          <span style={{ color: "#666" }}>shipped products.</span>
+        </h1>
+        <p style={{
+          fontSize: 17, lineHeight: 1.7, color: "#666", marginTop: 24,
+          maxWidth: 560, fontWeight: 400,
+        }}>
+          11+ years across SaaS, CRM, and consumer platforms. I prototype with AI tools,
+          validate with data, and ship with engineering teams. Currently exploring technical
+          product roles at scaling startups.
+        </p>
+        <div style={{ display: "flex", gap: 16, marginTop: 32, flexWrap: "wrap" }}>
+          <div style={{
+            padding: "8px 16px", borderRadius: 6, background: "#F0F0EC",
+            fontSize: 12, color: "#555", fontWeight: 500,
+          }}>🇮🇳 Based in Hyderabad</div>
+          <div style={{
+            padding: "8px 16px", borderRadius: 6, background: "#F0F0EC",
+            fontSize: 12, color: "#555", fontWeight: 500,
+          }}>🧠 AI-native builder</div>
+        </div>
       </div>
     </div>
   );
@@ -1148,7 +1172,7 @@ export default function Portfolio() {
         fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase",
         color: "#BBB", marginBottom: 24, paddingTop: 20,
         borderTop: "1px solid #E8E8E4",
-      }}>Selected Work</div>
+      }}>Building Products</div>
       <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(2, 1fr)",
@@ -1297,7 +1321,7 @@ export default function Portfolio() {
       {renderNav()}
       {activePage === "home" && (
         <>
-          {renderHero()}
+          {renderTopRow()}
           {renderProjectsGrid()}
           {renderAboutStrip()}
           {renderFooter()}
