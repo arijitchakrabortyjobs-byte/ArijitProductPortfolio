@@ -1119,6 +1119,42 @@ export default function Portfolio() {
                 ? "linear-gradient(135deg, rgba(235,0,27,0.08) 0%, rgba(247,158,27,0.08) 50%, rgba(59,130,246,0.06) 100%)"
                 : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
+            {/* Company logo */}
+            <div style={{
+              position: "absolute", top: 14, left: 18, zIndex: 2,
+              display: "flex", alignItems: "center", gap: 8,
+            }}>
+              {project.id === "mastercard" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                  <div style={{ display: "flex" }}>
+                    <div style={{ width: 20, height: 20, borderRadius: "50%", background: "#EB001B", opacity: 0.9 }} />
+                    <div style={{ width: 20, height: 20, borderRadius: "50%", background: "#F79E1B", opacity: 0.9, marginLeft: -8 }} />
+                  </div>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 0.5 }}>mastercard</span>
+                </div>
+              )}
+              {project.id === "sharechat" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                  <div style={{
+                    width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg, #FF4D67, #7C5CFC)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 12, color: "#fff", fontWeight: 700,
+                  }}>S</div>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 0.3 }}>ShareChat</span>
+                </div>
+              )}
+              {project.id === "gobblecube" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                  <div style={{
+                    width: 22, height: 22, borderRadius: 5,
+                    background: "linear-gradient(135deg, #7B2FF7, #06B6D4)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 12, color: "#fff", fontWeight: 700,
+                  }}>G</div>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 0.3 }}>GobbleCube</span>
+                </div>
+              )}
+            </div>
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
               padding: 20, width: "90%", opacity: 0.85,
