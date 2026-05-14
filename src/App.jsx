@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import * as recharts from "recharts";
 import GobbleCubeDashboard from "./gobblecube/GobbleCubeDashboard";
+import Sprint1SubscriptionIntelligence from "./mastercard/Sprint1SubscriptionIntelligence";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -919,6 +920,21 @@ const PORTFOLIO_PROJECTS = [
     ],
     type: "interactive",
   },
+  {
+    id: "mastercard",
+    title: "Mastercard Smart Subscription Intelligence",
+    subtitle: "AI-powered subscription optimizer — transforming passive transaction lists into proactive health insights, ghost detection & savings recommendations",
+    tags: ["B2C Fintech", "Subscription Management", "AI Intelligence", "Mastercard Ethoca", "Design Thinking"],
+    date: "May 2026",
+    description: "A 3-sprint product build reimagining Mastercard's Smart Subscriptions from a passive list into an AI-powered subscription optimizer embedded in banking apps via Ethoca. Grounded in real data: 41% subscription fatigue rate (Deloitte 2025), 25% of Mastercard chargebacks from recurring transactions, and 72% of consumers wanting subscription management in their banking app. Each sprint follows Design Thinking phases — from empathizing with the problem (Sprint 1) to prototyping the intelligence engine (Sprint 2) to proving business value (Sprint 3).",
+    highlights: [
+      "Sprint 1: AS-IS vs TO-BE split-screen — cryptic transaction logs transformed into a Subscription Health Score with ghost detection",
+      "Health Score algorithm (0-100) based on usage frequency, cost overlap, and spending trend across 12 subscription categories",
+      "Ghost subscription detector flagging services inactive 30+ days — identified $90.80/mo potential savings for test user profile",
+      "Data-backed business case: 40% chargeback reduction, 3.2× engagement lift, 67% retention improvement projected",
+    ],
+    type: "interactive",
+  },
 ];
 
 export default function Portfolio() {
@@ -1099,6 +1115,8 @@ export default function Portfolio() {
               position: "absolute", inset: 0,
               background: project.id === "gobblecube"
                 ? "linear-gradient(135deg, rgba(123,47,247,0.1) 0%, rgba(6,182,212,0.08) 50%, rgba(245,158,11,0.05) 100%)"
+                : project.id === "mastercard"
+                ? "linear-gradient(135deg, rgba(235,0,27,0.08) 0%, rgba(247,158,27,0.08) 50%, rgba(59,130,246,0.06) 100%)"
                 : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
             <div style={{
@@ -1110,6 +1128,11 @@ export default function Portfolio() {
                 { label: "Leaks", value: "₹12L", color: "#EF4444" },
                 { label: "Channels", value: "4", color: "#7B2FF7" },
                 { label: "Sprints", value: "5", color: "#06B6D4" },
+              ] : project.id === "mastercard" ? [
+                { label: "Health", value: "61", color: "#f59e0b" },
+                { label: "Savings", value: "$91", color: "#22c55e" },
+                { label: "Ghosts", value: "3", color: "#ef4444" },
+                { label: "Subs", value: "12", color: "#3b82f6" },
               ] : [
                 { label: "DAU", value: "31.2M", color: "#FF4D67" },
                 { label: "Gift Rev", value: "₹94Cr", color: "#FFB830" },
@@ -1310,6 +1333,7 @@ export default function Portfolio() {
           }}>Interactive Dashboard</div>
           {project.id === "sharechat" && <ShareChatDashboard />}
           {project.id === "gobblecube" && <GobbleCubeDashboard />}
+          {project.id === "mastercard" && <Sprint1SubscriptionIntelligence />}
         </div>
       </div>
     );
