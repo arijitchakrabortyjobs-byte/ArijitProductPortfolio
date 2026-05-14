@@ -1135,32 +1135,29 @@ export default function Portfolio() {
               )}
               {project.id === "sharechat" && (
                 <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <rect width="28" height="28" rx="7" fill="url(#sc-grad)" />
-                    <path d="M8.5 18.5 C8.5 18.5 7 18 7 16.5 L7 11 C7 9 8.5 7.5 10.5 7.5 L17.5 7.5 C19.5 7.5 21 9 21 11 L21 15 C21 17 19.5 18.5 17.5 18.5 L12 18.5 L9.5 20.5 L9.5 18.5 Z" fill="white" fillOpacity="0.95" />
-                    <defs>
-                      <linearGradient id="sc-grad" x1="0" y1="0" x2="28" y2="28">
-                        <stop offset="0%" stopColor="#FF5C38" />
-                        <stop offset="50%" stopColor="#FEC013" />
-                        <stop offset="100%" stopColor="#3A3988" />
-                      </linearGradient>
-                    </defs>
+                  <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
+                    <rect x="5" y="5" width="90" height="90" rx="22" fill="#FFD84C" />
+                    <path d="M5 50 L5 27 Q5 5 27 5 L50 5 Z" fill="#8B5CF6" />
+                    <path d="M5 50 L50 5 L50 50 Z" fill="#38BDF8" />
+                    <path d="M5 50 L5 73 Q5 95 27 95 L50 95 L50 50 Z" fill="#FF6B8A" />
+                    <path d="M50 50 L50 95 L73 95 Q95 95 95 73 L95 50 Z" fill="#F97316" />
+                    <path d="M50 5 L73 5 Q95 5 95 27 L95 50 L50 50 Z" fill="#FFD84C" />
+                    <path d="M5 50 L50 50 L50 95 Z" fill="#F97316" fillOpacity="0.6" />
+                    <rect x="5" y="5" width="90" height="90" rx="22" fill="none" stroke="#555" strokeWidth="3" strokeOpacity="0.15" />
                   </svg>
                   <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>ShareChat</span>
                 </div>
               )}
               {project.id === "gobblecube" && (
                 <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <path d="M14 3L24 9V19L14 25L4 19V9L14 3Z" fill="url(#gc-grad)" fillOpacity="0.9" />
-                    <path d="M14 3L24 9L14 15L4 9L14 3Z" fill="white" fillOpacity="0.15" />
-                    <path d="M14 15V25L4 19V9L14 15Z" fill="black" fillOpacity="0.1" />
-                    <defs>
-                      <linearGradient id="gc-grad" x1="4" y1="3" x2="24" y2="25">
-                        <stop offset="0%" stopColor="#22C55E" />
-                        <stop offset="100%" stopColor="#06B6D4" />
-                      </linearGradient>
-                    </defs>
+                  <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
+                    <path d="M15 30 L50 15 L85 30 L50 45 Z" fill="#4F7BF7" />
+                    <path d="M15 50 L50 35 L85 50 L50 65 Z" fill="#4F7BF7" fillOpacity="0.85" />
+                    <path d="M15 70 L50 55 L85 70 L50 85 Z" fill="#3B5FCC" />
+                    <path d="M15 30 L15 38 L50 53 L50 45 Z" fill="#3B5FCC" />
+                    <path d="M85 30 L85 38 L50 53 L50 45 Z" fill="#6B9BFF" />
+                    <path d="M15 50 L15 58 L50 73 L50 65 Z" fill="#3B5FCC" />
+                    <path d="M85 50 L85 58 L50 73 L50 65 Z" fill="#6B9BFF" />
                   </svg>
                   <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>GobbleCube</span>
                 </div>
