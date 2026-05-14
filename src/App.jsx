@@ -1122,36 +1122,47 @@ export default function Portfolio() {
             {/* Company logo */}
             <div style={{
               position: "absolute", top: 14, left: 18, zIndex: 2,
-              display: "flex", alignItems: "center", gap: 8,
+              display: "flex", alignItems: "center", gap: 10,
             }}>
               {project.id === "mastercard" && (
-                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
                   <div style={{ display: "flex" }}>
-                    <div style={{ width: 20, height: 20, borderRadius: "50%", background: "#EB001B", opacity: 0.9 }} />
-                    <div style={{ width: 20, height: 20, borderRadius: "50%", background: "#F79E1B", opacity: 0.9, marginLeft: -8 }} />
+                    <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#EB001B", opacity: 0.9 }} />
+                    <div style={{ width: 26, height: 26, borderRadius: "50%", background: "#F79E1B", opacity: 0.9, marginLeft: -10 }} />
                   </div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 0.5 }}>mastercard</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.5 }}>mastercard</span>
                 </div>
               )}
               {project.id === "sharechat" && (
-                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                  <div style={{
-                    width: 22, height: 22, borderRadius: 6, background: "linear-gradient(135deg, #FF4D67, #7C5CFC)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 12, color: "#fff", fontWeight: 700,
-                  }}>S</div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 0.3 }}>ShareChat</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect width="28" height="28" rx="7" fill="url(#sc-grad)" />
+                    <path d="M8.5 18.5 C8.5 18.5 7 18 7 16.5 L7 11 C7 9 8.5 7.5 10.5 7.5 L17.5 7.5 C19.5 7.5 21 9 21 11 L21 15 C21 17 19.5 18.5 17.5 18.5 L12 18.5 L9.5 20.5 L9.5 18.5 Z" fill="white" fillOpacity="0.95" />
+                    <defs>
+                      <linearGradient id="sc-grad" x1="0" y1="0" x2="28" y2="28">
+                        <stop offset="0%" stopColor="#FF5C38" />
+                        <stop offset="50%" stopColor="#FEC013" />
+                        <stop offset="100%" stopColor="#3A3988" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>ShareChat</span>
                 </div>
               )}
               {project.id === "gobblecube" && (
-                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                  <div style={{
-                    width: 22, height: 22, borderRadius: 5,
-                    background: "linear-gradient(135deg, #7B2FF7, #06B6D4)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 12, color: "#fff", fontWeight: 700,
-                  }}>G</div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 0.3 }}>GobbleCube</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <path d="M14 3L24 9V19L14 25L4 19V9L14 3Z" fill="url(#gc-grad)" fillOpacity="0.9" />
+                    <path d="M14 3L24 9L14 15L4 9L14 3Z" fill="white" fillOpacity="0.15" />
+                    <path d="M14 15V25L4 19V9L14 15Z" fill="black" fillOpacity="0.1" />
+                    <defs>
+                      <linearGradient id="gc-grad" x1="4" y1="3" x2="24" y2="25">
+                        <stop offset="0%" stopColor="#22C55E" />
+                        <stop offset="100%" stopColor="#06B6D4" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>GobbleCube</span>
                 </div>
               )}
             </div>
@@ -1228,8 +1239,8 @@ export default function Portfolio() {
   const renderProjectsGrid = () => (
     <div style={{ padding: "0 48px 80px" }}>
       <div style={{
-        fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase",
-        color: "#BBB", marginBottom: 24, paddingTop: 20,
+        fontSize: 15, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase",
+        color: "#1A1A1A", marginBottom: 28, paddingTop: 24,
         borderTop: "1px solid #E8E8E4",
       }}>Building Products</div>
       <div style={{
@@ -1241,6 +1252,46 @@ export default function Portfolio() {
       </div>
     </div>
   );
+
+  const renderToolsStrip = () => {
+    const tools = [
+      { name: "Claude", icon: "✦", color: "#D97706", bg: "rgba(217,119,6,0.08)" },
+      { name: "VS Code", icon: "⬡", color: "#007ACC", bg: "rgba(0,122,204,0.08)" },
+      { name: "GitHub", icon: "⬢", color: "#f0f0f0", bg: "rgba(255,255,255,0.06)" },
+      { name: "Vercel", icon: "▲", color: "#f0f0f0", bg: "rgba(255,255,255,0.06)" },
+      { name: "Productboard", icon: "◆", color: "#FF6D3B", bg: "rgba(255,109,59,0.08)" },
+      { name: "Mixpanel", icon: "◉", color: "#7856FF", bg: "rgba(120,86,255,0.08)" },
+    ];
+    return (
+      <div style={{
+        padding: "48px 48px", background: "#0c0f1a",
+        borderTop: "1px solid #E8E8E4",
+      }}>
+        <div style={{
+          fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase",
+          color: "rgba(255,255,255,0.35)", marginBottom: 24, textAlign: "center",
+        }}>Tools & Stack</div>
+        <div style={{
+          display: "flex", justifyContent: "center", gap: 20, flexWrap: "wrap",
+        }}>
+          {tools.map(t => (
+            <div key={t.name} style={{
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
+              padding: "20px 24px", borderRadius: 14,
+              background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)",
+              minWidth: 110, transition: "all 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = t.bg; e.currentTarget.style.borderColor = `${t.color}33`; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; }}
+            >
+              <span style={{ fontSize: 24, color: t.color, lineHeight: 1 }}>{t.icon}</span>
+              <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.6)", letterSpacing: 0.3 }}>{t.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   const renderAboutStrip = () => (
     <div style={{
@@ -1383,6 +1434,7 @@ export default function Portfolio() {
         <>
           {renderTopRow()}
           {renderProjectsGrid()}
+          {renderToolsStrip()}
           {renderAboutStrip()}
           {renderFooter()}
         </>
