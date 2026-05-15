@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import * as recharts from "recharts";
 import GobbleCubeDashboard from "./gobblecube/GobbleCubeDashboard";
 import Sprint1SubscriptionIntelligence from "./mastercard/Sprint1SubscriptionIntelligence";
+import Sprint2RecommendationEngine from "./mastercard/Sprint2RecommendationEngine";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -942,6 +943,7 @@ export default function Portfolio() {
   const [activePage, setActivePage] = useState("home");
   const [activeProject, setActiveProject] = useState(null);
   const [scrollY, setScrollY] = useState(0);
+  const [mastercardSprint, setMastercardSprint] = useState("sprint1");
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -1417,7 +1419,30 @@ export default function Portfolio() {
           }}>Interactive Dashboard</div>
           {project.id === "sharechat" && <ShareChatDashboard />}
           {project.id === "gobblecube" && <GobbleCubeDashboard />}
-          {project.id === "mastercard" && <Sprint1SubscriptionIntelligence />}
+          {project.id === "mastercard" && (
+            <div>
+              <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
+                {[
+                  { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
+                  { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                ].map(sp => (
+                  <button
+                    key={sp.key}
+                    onClick={() => setMastercardSprint(sp.key)}
+                    style={{
+                      padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                      fontSize: 11, fontWeight: 600, letterSpacing: 0.5,
+                      background: mastercardSprint === sp.key ? "#1a1a1a" : "#f0f0f0",
+                      color: mastercardSprint === sp.key ? "#fff" : "#666",
+                      transition: "all 0.2s",
+                    }}
+                  >{sp.label}</button>
+                ))}
+              </div>
+              {mastercardSprint === "sprint1" && <Sprint1SubscriptionIntelligence />}
+              {mastercardSprint === "sprint2" && <Sprint2RecommendationEngine />}
+            </div>
+          )}
         </div>
       </div>
     );
