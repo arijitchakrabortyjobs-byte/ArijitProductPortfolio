@@ -3,6 +3,7 @@ import * as recharts from "recharts";
 import GobbleCubeDashboard from "./gobblecube/GobbleCubeDashboard";
 import Sprint1SubscriptionIntelligence from "./mastercard/Sprint1SubscriptionIntelligence";
 import Sprint2RecommendationEngine from "./mastercard/Sprint2RecommendationEngine";
+import Sprint3BusinessValidation from "./mastercard/Sprint3BusinessValidation";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -1425,6 +1426,7 @@ export default function Portfolio() {
                 {[
                   { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
                   { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                  { key: "sprint3", label: "Sprint 3 — Test + Validate" },
                 ].map(sp => (
                   <button
                     key={sp.key}
@@ -1441,6 +1443,7 @@ export default function Portfolio() {
               </div>
               {mastercardSprint === "sprint1" && <Sprint1SubscriptionIntelligence />}
               {mastercardSprint === "sprint2" && <Sprint2RecommendationEngine />}
+              {mastercardSprint === "sprint3" && <Sprint3BusinessValidation />}
             </div>
           )}
         </div>
