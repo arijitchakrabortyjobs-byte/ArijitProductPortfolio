@@ -4,6 +4,7 @@ import GobbleCubeDashboard from "./gobblecube/GobbleCubeDashboard";
 import Sprint1SubscriptionIntelligence from "./mastercard/Sprint1SubscriptionIntelligence";
 import Sprint2RecommendationEngine from "./mastercard/Sprint2RecommendationEngine";
 import Sprint3BusinessValidation from "./mastercard/Sprint3BusinessValidation";
+import Sprint1PatientJourney from "./medable/Sprint1PatientJourney";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -937,6 +938,21 @@ const PORTFOLIO_PROJECTS = [
     ],
     type: "interactive",
   },
+  {
+    id: "medable",
+    title: "Medable Patient Journey Intelligence",
+    subtitle: "AI-powered patient retention platform — transforming opaque trial event logs into predictive dropout prevention and proactive patient engagement",
+    tags: ["Health Tech", "Clinical Trials", "AI Retention", "Decentralized Trials", "Design Thinking"],
+    date: "May 2026",
+    description: "A 5-sprint product build tackling the #1 clinical trial crisis: patient dropout. 30-40% of trial participants drop out, costing $19B+ annually in failed/delayed trials. Built for Medable's decentralized clinical trial platform, this solution owns the patient journey end-to-end — from AI risk scoring and engagement analytics to patient-facing apps and site coordinator dashboards. Each sprint follows Design Thinking phases, progressing from empathizing with the dropout crisis (Sprint 1) through predictive AI (Sprint 2), patient engagement (Sprint 3), site empowerment (Sprint 4), to proving business value (Sprint 5).",
+    highlights: [
+      "Sprint 1: AS-IS vs TO-BE — opaque event logs transformed into a Patient Journey Intelligence view with risk scoring and engagement tracking",
+      "AI dropout prediction engine scoring patients from low → critical risk based on visit patterns, engagement decay, and burden signals",
+      "Patient-first design replacing 15 siloed systems with a unified journey view for site coordinators",
+      "Data-backed: 40% trials fail retention targets, 44% cite travel burden, AI tools can improve retention by 65%",
+    ],
+    type: "interactive",
+  },
 ];
 
 export default function Portfolio() {
@@ -945,6 +961,7 @@ export default function Portfolio() {
   const [activeProject, setActiveProject] = useState(null);
   const [scrollY, setScrollY] = useState(0);
   const [mastercardSprint, setMastercardSprint] = useState("sprint1");
+  const [medableSprint, setMedableSprint] = useState("sprint1");
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -1120,6 +1137,8 @@ export default function Portfolio() {
                 ? "linear-gradient(135deg, rgba(123,47,247,0.1) 0%, rgba(6,182,212,0.08) 50%, rgba(245,158,11,0.05) 100%)"
                 : project.id === "mastercard"
                 ? "linear-gradient(135deg, rgba(235,0,27,0.08) 0%, rgba(247,158,27,0.08) 50%, rgba(59,130,246,0.06) 100%)"
+                : project.id === "medable"
+                ? "linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(168,85,247,0.08) 50%, rgba(196,181,253,0.06) 100%)"
                 : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
             {/* Company logo */}
@@ -1165,6 +1184,17 @@ export default function Portfolio() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>GobbleCube</span>
                 </div>
               )}
+              {project.id === "medable" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 8,
+                    background: "linear-gradient(135deg, #7c3aed, #a78bfa)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 14, color: "#fff", fontWeight: 800,
+                  }}>M</div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>Medable</span>
+                </div>
+              )}
             </div>
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
@@ -1175,6 +1205,11 @@ export default function Portfolio() {
                 { label: "Leaks", value: "₹12L", color: "#EF4444" },
                 { label: "Channels", value: "4", color: "#7B2FF7" },
                 { label: "Sprints", value: "5", color: "#06B6D4" },
+              ] : project.id === "medable" ? [
+                { label: "Patients", value: "248", color: "#7c3aed" },
+                { label: "At Risk", value: "52", color: "#f59e0b" },
+                { label: "Dropout", value: "13.7%", color: "#ef4444" },
+                { label: "Sprints", value: "5", color: "#22c55e" },
               ] : project.id === "mastercard" ? [
                 { label: "Health", value: "61", color: "#f59e0b" },
                 { label: "Savings", value: "$91", color: "#22c55e" },
@@ -1444,6 +1479,28 @@ export default function Portfolio() {
               {mastercardSprint === "sprint1" && <Sprint1SubscriptionIntelligence />}
               {mastercardSprint === "sprint2" && <Sprint2RecommendationEngine />}
               {mastercardSprint === "sprint3" && <Sprint3BusinessValidation />}
+            </div>
+          )}
+          {project.id === "medable" && (
+            <div>
+              <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap" }}>
+                {[
+                  { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
+                ].map(sp => (
+                  <button
+                    key={sp.key}
+                    onClick={() => setMedableSprint(sp.key)}
+                    style={{
+                      padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                      fontSize: 11, fontWeight: 600, letterSpacing: 0.5,
+                      background: medableSprint === sp.key ? "#7c3aed" : "#f0f0f0",
+                      color: medableSprint === sp.key ? "#fff" : "#666",
+                      transition: "all 0.2s",
+                    }}
+                  >{sp.label}</button>
+                ))}
+              </div>
+              {medableSprint === "sprint1" && <Sprint1PatientJourney />}
             </div>
           )}
         </div>
