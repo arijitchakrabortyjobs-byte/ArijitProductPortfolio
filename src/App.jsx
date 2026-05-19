@@ -7,6 +7,9 @@ import Sprint3BusinessValidation from "./mastercard/Sprint3BusinessValidation";
 import Sprint1PatientJourney from "./medable/Sprint1PatientJourney";
 import Sprint1FalsePositiveIntelligence from "./amex/Sprint1FalsePositiveIntelligence";
 import Sprint2ConfidenceEngine from "./amex/Sprint2ConfidenceEngine";
+import Sprint3LiveDecisionEngine from "./amex/Sprint3LiveDecisionEngine";
+import Sprint4CustomerResolution from "./amex/Sprint4CustomerResolution";
+import Sprint5BusinessValidation from "./amex/Sprint5BusinessValidation";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -1543,6 +1546,9 @@ export default function Portfolio() {
                 {[
                   { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
                   { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                  { key: "sprint3", label: "Sprint 3 — Prototype + Test" },
+                  { key: "sprint4", label: "Sprint 4 — Test + Iterate" },
+                  { key: "sprint5", label: "Sprint 5 — Business Validation" },
                 ].map(sp => (
                   <button
                     key={sp.key}
@@ -1559,6 +1565,9 @@ export default function Portfolio() {
               </div>
               {amexSprint === "sprint1" && <Sprint1FalsePositiveIntelligence />}
               {amexSprint === "sprint2" && <Sprint2ConfidenceEngine />}
+              {amexSprint === "sprint3" && <Sprint3LiveDecisionEngine />}
+              {amexSprint === "sprint4" && <Sprint4CustomerResolution />}
+              {amexSprint === "sprint5" && <Sprint5BusinessValidation />}
             </div>
           )}
         </div>
