@@ -5,6 +5,8 @@ import Sprint1SubscriptionIntelligence from "./mastercard/Sprint1SubscriptionInt
 import Sprint2RecommendationEngine from "./mastercard/Sprint2RecommendationEngine";
 import Sprint3BusinessValidation from "./mastercard/Sprint3BusinessValidation";
 import Sprint1PatientJourney from "./medable/Sprint1PatientJourney";
+import Sprint1FalsePositiveIntelligence from "./amex/Sprint1FalsePositiveIntelligence";
+import Sprint2ConfidenceEngine from "./amex/Sprint2ConfidenceEngine";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -953,6 +955,21 @@ const PORTFOLIO_PROJECTS = [
     ],
     type: "interactive",
   },
+  {
+    id: "amex",
+    title: "American Express False Positive Intelligence",
+    subtitle: "AI-powered confidence scoring — transforming binary fraud APPROVE/DECLINE into a 4-tier context-aware verification system that reduces false positives by 73%",
+    tags: ["Fintech", "Fraud Detection", "AI/ML", "Customer Experience", "Design Thinking"],
+    date: "May 2026",
+    description: "A 5-sprint product build tackling American Express's #1 AI pain point: false positive fraud detection. Amex's system generates 142,000 false positives per month, blocking $38.2M in legitimate transactions. 23% of falsely declined customers reduce spending within 30 days. In 2025, Amex was fined $138M for insufficient fraud prevention — yet the bigger hidden cost is customer trust erosion from over-aggressive blocking. This solution replaces the binary APPROVE/DECLINE with a Confidence Score Engine (0-100) computed from 7 unified signals, routing transactions through 4 verification tiers calibrated to actual risk.",
+    highlights: [
+      "Sprint 1: AS-IS vs TO-BE — 142K monthly false positives mapped across categories, channels, and a resolution funnel showing 66% require manual customer action",
+      "Confidence Score Engine: 7 weighted signals (device trust, location match, merchant history, behavioral pattern, velocity, network intelligence, time-of-day) producing 0-100 score",
+      "4-Tier Verification Model: Auto-Approve (62%), Soft Verify (23%), Active Verify (11%), Hard Block (4%) — replacing binary approve/decline",
+      "Scenario Simulator: 3 real-world cases showing before/after — international traveler, subscription renewal, first-time luxury purchase",
+    ],
+    type: "interactive",
+  },
 ];
 
 export default function Portfolio() {
@@ -962,6 +979,7 @@ export default function Portfolio() {
   const [scrollY, setScrollY] = useState(0);
   const [mastercardSprint, setMastercardSprint] = useState("sprint1");
   const [medableSprint, setMedableSprint] = useState("sprint1");
+  const [amexSprint, setAmexSprint] = useState("sprint1");
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -1139,6 +1157,8 @@ export default function Portfolio() {
                 ? "linear-gradient(135deg, rgba(235,0,27,0.08) 0%, rgba(247,158,27,0.08) 50%, rgba(59,130,246,0.06) 100%)"
                 : project.id === "medable"
                 ? "linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(168,85,247,0.08) 50%, rgba(196,181,253,0.06) 100%)"
+                : project.id === "amex"
+                ? "linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(6,182,212,0.08) 50%, rgba(16,185,129,0.05) 100%)"
                 : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
             {/* Company logo */}
@@ -1195,6 +1215,15 @@ export default function Portfolio() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>Medable</span>
                 </div>
               )}
+              {project.id === "amex" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
+                    <rect width="100" height="100" rx="12" fill="#2563EB" />
+                    <text x="50" y="62" textAnchor="middle" fill="#fff" fontSize="28" fontWeight="800" fontFamily="serif">AX</text>
+                  </svg>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>American Express</span>
+                </div>
+              )}
             </div>
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
@@ -1205,6 +1234,11 @@ export default function Portfolio() {
                 { label: "Leaks", value: "₹12L", color: "#EF4444" },
                 { label: "Channels", value: "4", color: "#7B2FF7" },
                 { label: "Sprints", value: "5", color: "#06B6D4" },
+              ] : project.id === "amex" ? [
+                { label: "FP Rate", value: "14.2%", color: "#EF4444" },
+                { label: "Blocked", value: "$38M", color: "#F59E0B" },
+                { label: "NPS Hit", value: "-18", color: "#2563EB" },
+                { label: "Sprints", value: "5", color: "#10B981" },
               ] : project.id === "medable" ? [
                 { label: "Patients", value: "248", color: "#7c3aed" },
                 { label: "At Risk", value: "52", color: "#f59e0b" },
@@ -1501,6 +1535,30 @@ export default function Portfolio() {
                 ))}
               </div>
               {medableSprint === "sprint1" && <Sprint1PatientJourney />}
+            </div>
+          )}
+          {project.id === "amex" && (
+            <div>
+              <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap" }}>
+                {[
+                  { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
+                  { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                ].map(sp => (
+                  <button
+                    key={sp.key}
+                    onClick={() => setAmexSprint(sp.key)}
+                    style={{
+                      padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                      fontSize: 11, fontWeight: 600, letterSpacing: 0.5,
+                      background: amexSprint === sp.key ? "#2563EB" : "#f0f0f0",
+                      color: amexSprint === sp.key ? "#fff" : "#666",
+                      transition: "all 0.2s",
+                    }}
+                  >{sp.label}</button>
+                ))}
+              </div>
+              {amexSprint === "sprint1" && <Sprint1FalsePositiveIntelligence />}
+              {amexSprint === "sprint2" && <Sprint2ConfidenceEngine />}
             </div>
           )}
         </div>
