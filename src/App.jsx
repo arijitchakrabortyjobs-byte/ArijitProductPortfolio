@@ -10,6 +10,7 @@ import Sprint2ConfidenceEngine from "./amex/Sprint2ConfidenceEngine";
 import Sprint3LiveDecisionEngine from "./amex/Sprint3LiveDecisionEngine";
 import Sprint4CustomerResolution from "./amex/Sprint4CustomerResolution";
 import Sprint5BusinessValidation from "./amex/Sprint5BusinessValidation";
+import AIMLArchitecture from "./amex/AIMLArchitecture";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -1549,6 +1550,7 @@ export default function Portfolio() {
                   { key: "sprint3", label: "Sprint 3 — Prototype + Test" },
                   { key: "sprint4", label: "Sprint 4 — Test + Iterate" },
                   { key: "sprint5", label: "Sprint 5 — Business Validation" },
+                  { key: "aiml", label: "🧠 AI/ML Architecture" },
                 ].map(sp => (
                   <button
                     key={sp.key}
@@ -1568,6 +1570,7 @@ export default function Portfolio() {
               {amexSprint === "sprint3" && <Sprint3LiveDecisionEngine />}
               {amexSprint === "sprint4" && <Sprint4CustomerResolution />}
               {amexSprint === "sprint5" && <Sprint5BusinessValidation />}
+              {amexSprint === "aiml" && <AIMLArchitecture />}
             </div>
           )}
         </div>
