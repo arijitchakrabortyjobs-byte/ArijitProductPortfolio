@@ -17,6 +17,9 @@ import Sprint5BusinessValidation from "./amex/Sprint5BusinessValidation";
 import AIMLArchitecture from "./amex/AIMLArchitecture";
 import Sprint1ReconciliationCrisis from "./pinelabs/Sprint1ReconciliationCrisis";
 import Sprint2MatchingEngine from "./pinelabs/Sprint2MatchingEngine";
+import Sprint3ReconciliationDashboard from "./pinelabs/Sprint3ReconciliationDashboard";
+import Sprint4DisputeResolution from "./pinelabs/Sprint4DisputeResolution";
+import PinelabsSprint5BusinessValidation from "./pinelabs/Sprint5BusinessValidation";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -1627,6 +1630,9 @@ export default function Portfolio() {
                 {[
                   { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
                   { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                  { key: "sprint3", label: "Sprint 3 — Prototype + Test" },
+                  { key: "sprint4", label: "Sprint 4 — Test + Iterate" },
+                  { key: "sprint5", label: "Sprint 5 — Business Validation" },
                 ].map(sp => (
                   <button
                     key={sp.key}
@@ -1643,6 +1649,9 @@ export default function Portfolio() {
               </div>
               {pinelabsSprint === "sprint1" && <Sprint1ReconciliationCrisis />}
               {pinelabsSprint === "sprint2" && <Sprint2MatchingEngine />}
+              {pinelabsSprint === "sprint3" && <Sprint3ReconciliationDashboard />}
+              {pinelabsSprint === "sprint4" && <Sprint4DisputeResolution />}
+              {pinelabsSprint === "sprint5" && <PinelabsSprint5BusinessValidation />}
             </div>
           )}
         </div>
