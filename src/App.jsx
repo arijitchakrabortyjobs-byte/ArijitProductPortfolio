@@ -15,6 +15,8 @@ import Sprint3LiveDecisionEngine from "./amex/Sprint3LiveDecisionEngine";
 import Sprint4CustomerResolution from "./amex/Sprint4CustomerResolution";
 import Sprint5BusinessValidation from "./amex/Sprint5BusinessValidation";
 import AIMLArchitecture from "./amex/AIMLArchitecture";
+import Sprint1ReconciliationCrisis from "./pinelabs/Sprint1ReconciliationCrisis";
+import Sprint2MatchingEngine from "./pinelabs/Sprint2MatchingEngine";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -978,6 +980,21 @@ const PORTFOLIO_PROJECTS = [
     ],
     type: "interactive",
   },
+  {
+    id: "pinelabs",
+    title: "Pine Labs Smart Settlement Reconciliation",
+    subtitle: "AI-powered auto-reconciliation engine — transforming manual 4-hour daily settlement chaos across 5+ payment modes into 8-minute intelligent matching with 96% auto-match rate",
+    tags: ["Payments", "Merchant Tech", "AI/ML", "Reconciliation", "Design Thinking"],
+    date: "May 2026",
+    description: "A 5-sprint product build tackling Pine Labs merchants' #1 operational pain: settlement reconciliation. With 988K merchants processing 16.4M daily transactions across 5+ payment modes (UPI, credit cards, debit cards, wallets, EMI/BNPL) — each with different settlement cycles (T+0 to T+7), batch schedules, and fee structures — 312K transactions daily require manual reconciliation. Merchants spend an average of 4.2 hours per day just figuring out if they got paid correctly, with ₹142 Cr monthly revenue leakage from errors. This solution builds a 5-tier AI matching cascade that auto-reconciles 96% of transactions with 94% average confidence.",
+    highlights: [
+      "Sprint 1: AS-IS vs TO-BE — 312K daily unmatched transactions, 5 payment modes with separate settlement cycles, 8.7% error rate mapped across the reconciliation funnel",
+      "AI Matching Engine: 5-tier cascade from exact match (99.2% accuracy) through fuzzy matching, split settlement tracking, to anomaly flagging with AI-suggested resolutions",
+      "Live reconciliation dashboard with per-transaction confidence scoring, signal decomposition, and one-click exception handling",
+      "Business case: ₹142Cr → ₹6Cr monthly leakage, 4.2 hrs → 8 min daily recon time, 96% auto-match across 988K merchants",
+    ],
+    type: "interactive",
+  },
 ];
 
 export default function Portfolio() {
@@ -988,6 +1005,7 @@ export default function Portfolio() {
   const [mastercardSprint, setMastercardSprint] = useState("sprint1");
   const [medableSprint, setMedableSprint] = useState("sprint1");
   const [amexSprint, setAmexSprint] = useState("sprint1");
+  const [pinelabsSprint, setPinelabsSprint] = useState("sprint1");
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -1167,6 +1185,8 @@ export default function Portfolio() {
                 ? "linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(168,85,247,0.08) 50%, rgba(196,181,253,0.06) 100%)"
                 : project.id === "amex"
                 ? "linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(6,182,212,0.08) 50%, rgba(16,185,129,0.05) 100%)"
+                : project.id === "pinelabs"
+                ? "linear-gradient(135deg, rgba(5,150,105,0.12) 0%, rgba(16,185,129,0.08) 50%, rgba(52,211,153,0.05) 100%)"
                 : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
             {/* Company logo */}
@@ -1232,6 +1252,17 @@ export default function Portfolio() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>American Express</span>
                 </div>
               )}
+              {project.id === "pinelabs" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 8,
+                    background: "linear-gradient(135deg, #059669, #047857)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 10, color: "#fff", fontWeight: 900, letterSpacing: 0.5,
+                  }}>PL</div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>Pine Labs</span>
+                </div>
+              )}
             </div>
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
@@ -1252,6 +1283,11 @@ export default function Portfolio() {
                 { label: "At Risk", value: "52", color: "#f59e0b" },
                 { label: "Dropout", value: "13.7%", color: "#ef4444" },
                 { label: "Sprints", value: "5", color: "#22c55e" },
+              ] : project.id === "pinelabs" ? [
+                { label: "Txns/Day", value: "16.4M", color: "#059669" },
+                { label: "Unmatched", value: "312K", color: "#EF4444" },
+                { label: "Leakage", value: "₹142Cr", color: "#F59E0B" },
+                { label: "Sprints", value: "5", color: "#10B981" },
               ] : project.id === "mastercard" ? [
                 { label: "Health", value: "61", color: "#f59e0b" },
                 { label: "Savings", value: "$91", color: "#22c55e" },
@@ -1583,6 +1619,30 @@ export default function Portfolio() {
               {amexSprint === "sprint4" && <Sprint4CustomerResolution />}
               {amexSprint === "sprint5" && <Sprint5BusinessValidation />}
               {amexSprint === "aiml" && <AIMLArchitecture />}
+            </div>
+          )}
+          {project.id === "pinelabs" && (
+            <div>
+              <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap" }}>
+                {[
+                  { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
+                  { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                ].map(sp => (
+                  <button
+                    key={sp.key}
+                    onClick={() => setPinelabsSprint(sp.key)}
+                    style={{
+                      padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                      fontSize: 11, fontWeight: 600, letterSpacing: 0.5,
+                      background: pinelabsSprint === sp.key ? "#059669" : "#f0f0f0",
+                      color: pinelabsSprint === sp.key ? "#fff" : "#666",
+                      transition: "all 0.2s",
+                    }}
+                  >{sp.label}</button>
+                ))}
+              </div>
+              {pinelabsSprint === "sprint1" && <Sprint1ReconciliationCrisis />}
+              {pinelabsSprint === "sprint2" && <Sprint2MatchingEngine />}
             </div>
           )}
         </div>
