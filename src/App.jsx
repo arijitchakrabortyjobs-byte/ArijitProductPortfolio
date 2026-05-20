@@ -5,6 +5,10 @@ import Sprint1SubscriptionIntelligence from "./mastercard/Sprint1SubscriptionInt
 import Sprint2RecommendationEngine from "./mastercard/Sprint2RecommendationEngine";
 import Sprint3BusinessValidation from "./mastercard/Sprint3BusinessValidation";
 import Sprint1PatientJourney from "./medable/Sprint1PatientJourney";
+import Sprint2PredictiveAI from "./medable/Sprint2PredictiveAI";
+import Sprint3PatientEngagement from "./medable/Sprint3PatientEngagement";
+import Sprint4SiteEmpowerment from "./medable/Sprint4SiteEmpowerment";
+import MedableAIMLArchitecture from "./medable/MedableAIMLArchitecture";
 import Sprint1FalsePositiveIntelligence from "./amex/Sprint1FalsePositiveIntelligence";
 import Sprint2ConfidenceEngine from "./amex/Sprint2ConfidenceEngine";
 import Sprint3LiveDecisionEngine from "./amex/Sprint3LiveDecisionEngine";
@@ -1524,6 +1528,10 @@ export default function Portfolio() {
               <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap" }}>
                 {[
                   { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
+                  { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                  { key: "sprint3", label: "Sprint 3 — Prototype + Test" },
+                  { key: "sprint4", label: "Sprint 4 — Test + Iterate" },
+                  { key: "aiml", label: "🧠 AI/ML Architecture" },
                 ].map(sp => (
                   <button
                     key={sp.key}
@@ -1539,6 +1547,10 @@ export default function Portfolio() {
                 ))}
               </div>
               {medableSprint === "sprint1" && <Sprint1PatientJourney />}
+              {medableSprint === "sprint2" && <Sprint2PredictiveAI />}
+              {medableSprint === "sprint3" && <Sprint3PatientEngagement />}
+              {medableSprint === "sprint4" && <Sprint4SiteEmpowerment />}
+              {medableSprint === "aiml" && <MedableAIMLArchitecture />}
             </div>
           )}
           {project.id === "amex" && (
