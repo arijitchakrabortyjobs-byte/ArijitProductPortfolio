@@ -15,6 +15,8 @@ import Sprint3LiveDecisionEngine from "./amex/Sprint3LiveDecisionEngine";
 import Sprint4CustomerResolution from "./amex/Sprint4CustomerResolution";
 import Sprint5BusinessValidation from "./amex/Sprint5BusinessValidation";
 import AIMLArchitecture from "./amex/AIMLArchitecture";
+import Sprint1AttributionGap from "./docusign/Sprint1AttributionGap";
+import Sprint2AgentArchitecture from "./docusign/Sprint2AgentArchitecture";
 import Sprint1ReconciliationCrisis from "./pinelabs/Sprint1ReconciliationCrisis";
 import Sprint2MatchingEngine from "./pinelabs/Sprint2MatchingEngine";
 import Sprint3ReconciliationDashboard from "./pinelabs/Sprint3ReconciliationDashboard";
@@ -998,6 +1000,21 @@ const PORTFOLIO_PROJECTS = [
     ],
     type: "interactive",
   },
+  {
+    id: "docusign",
+    title: "Docusign AI Marketing Attribution Agent",
+    subtitle: "Multi-agent AI system (LangGraph + CrewAI) — 4 autonomous agents that ingest marketing data from Salesforce, Marketo, Snowflake & Docusign, run multi-touch attribution, and auto-generate weekly insight reports",
+    tags: ["Agentic AI", "Marketing Analytics", "LangGraph", "CrewAI", "LangSmith"],
+    date: "May 2026",
+    description: "A 5-sprint product build addressing Docusign's marketing attribution black hole. With $180M annual marketing spend and 680K agreements/year, 43% of the $1.2B pipeline has zero marketing attribution — the CMO cannot prove which campaigns drove revenue. Data sits siloed across Salesforce (CRM), Marketo (campaigns), Snowflake (analytics), and Docusign (agreement events) with no AI connecting them. This solution builds a 4-agent CrewAI system orchestrated by LangGraph: a Data Ingestion Agent that unifies sources, an Attribution Agent running 5 models simultaneously, an Insight Agent generating natural-language strategy recommendations, and a Report Writer Agent that auto-distributes weekly reports. Every agent call is traced in LangSmith for full observability.",
+    highlights: [
+      "Sprint 1: AS-IS attribution gap — 43% unattributed pipeline, 4 siloed data sources, 23 hrs/week manual reporting, 18-day campaign ROI lag, stakeholder pain mapping across VP Marketing, Ops, Performance, and Sales",
+      "Multi-Agent Architecture: 4 CrewAI agents (Ingestion, Attribution, Insight, Reporter) with defined roles, goals, backstories, and tool bindings — orchestrated via LangGraph StateGraph with conditional routing",
+      "5 attribution models (First Touch, Last Touch, Linear, Time Decay, W-Shaped) running simultaneously with Bayesian auto-selection per campaign type — replacing single last-click model",
+      "LangGraph state management with typed schema, quality gates, confidence-based conditional routing, and LangSmith tracing for full production observability",
+    ],
+    type: "interactive",
+  },
 ];
 
 export default function Portfolio() {
@@ -1009,6 +1026,7 @@ export default function Portfolio() {
   const [medableSprint, setMedableSprint] = useState("sprint1");
   const [amexSprint, setAmexSprint] = useState("sprint1");
   const [pinelabsSprint, setPinelabsSprint] = useState("sprint1");
+  const [docusignSprint, setDocusignSprint] = useState("sprint1");
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -1190,6 +1208,8 @@ export default function Portfolio() {
                 ? "linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(6,182,212,0.08) 50%, rgba(16,185,129,0.05) 100%)"
                 : project.id === "pinelabs"
                 ? "linear-gradient(135deg, rgba(5,150,105,0.12) 0%, rgba(16,185,129,0.08) 50%, rgba(52,211,153,0.05) 100%)"
+                : project.id === "docusign"
+                ? "linear-gradient(135deg, rgba(217,119,6,0.12) 0%, rgba(245,158,11,0.08) 50%, rgba(252,211,77,0.05) 100%)"
                 : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
             {/* Company logo */}
@@ -1266,6 +1286,17 @@ export default function Portfolio() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>Pine Labs</span>
                 </div>
               )}
+              {project.id === "docusign" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 8,
+                    background: "linear-gradient(135deg, #D97706, #B45309)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 10, color: "#fff", fontWeight: 900, letterSpacing: 0.5,
+                  }}>DS</div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>Docusign</span>
+                </div>
+              )}
             </div>
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
@@ -1290,6 +1321,11 @@ export default function Portfolio() {
                 { label: "Txns/Day", value: "16.4M", color: "#059669" },
                 { label: "Unmatched", value: "312K", color: "#EF4444" },
                 { label: "Leakage", value: "₹142Cr", color: "#F59E0B" },
+                { label: "Sprints", value: "5", color: "#10B981" },
+              ] : project.id === "docusign" ? [
+                { label: "Pipeline", value: "$1.2B", color: "#D97706" },
+                { label: "Unattributed", value: "43%", color: "#EF4444" },
+                { label: "Agents", value: "4", color: "#F59E0B" },
                 { label: "Sprints", value: "5", color: "#10B981" },
               ] : project.id === "mastercard" ? [
                 { label: "Health", value: "61", color: "#f59e0b" },
@@ -1652,6 +1688,30 @@ export default function Portfolio() {
               {pinelabsSprint === "sprint3" && <Sprint3ReconciliationDashboard />}
               {pinelabsSprint === "sprint4" && <Sprint4DisputeResolution />}
               {pinelabsSprint === "sprint5" && <PinelabsSprint5BusinessValidation />}
+            </div>
+          )}
+          {project.id === "docusign" && (
+            <div>
+              <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap" }}>
+                {[
+                  { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
+                  { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                ].map(sp => (
+                  <button
+                    key={sp.key}
+                    onClick={() => setDocusignSprint(sp.key)}
+                    style={{
+                      padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                      fontSize: 11, fontWeight: 600, letterSpacing: 0.5,
+                      background: docusignSprint === sp.key ? "#D97706" : "#f0f0f0",
+                      color: docusignSprint === sp.key ? "#fff" : "#666",
+                      transition: "all 0.2s",
+                    }}
+                  >{sp.label}</button>
+                ))}
+              </div>
+              {docusignSprint === "sprint1" && <Sprint1AttributionGap />}
+              {docusignSprint === "sprint2" && <Sprint2AgentArchitecture />}
             </div>
           )}
         </div>
