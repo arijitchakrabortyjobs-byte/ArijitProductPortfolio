@@ -17,11 +17,15 @@ import Sprint5BusinessValidation from "./amex/Sprint5BusinessValidation";
 import AIMLArchitecture from "./amex/AIMLArchitecture";
 import Sprint1AttributionGap from "./docusign/Sprint1AttributionGap";
 import Sprint2AgentArchitecture from "./docusign/Sprint2AgentArchitecture";
+import Sprint3AgentWorkflow from "./docusign/Sprint3AgentWorkflow";
+import Sprint4Evaluations from "./docusign/Sprint4Evaluations";
+import Sprint5BusinessCase from "./docusign/Sprint5BusinessCase";
 import Sprint1ReconciliationCrisis from "./pinelabs/Sprint1ReconciliationCrisis";
 import Sprint2MatchingEngine from "./pinelabs/Sprint2MatchingEngine";
 import Sprint3ReconciliationDashboard from "./pinelabs/Sprint3ReconciliationDashboard";
 import Sprint4DisputeResolution from "./pinelabs/Sprint4DisputeResolution";
 import PinelabsSprint5BusinessValidation from "./pinelabs/Sprint5BusinessValidation";
+import Sprint1HoldDetection from "./fiserv/Sprint1HoldDetection";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -1015,6 +1019,21 @@ const PORTFOLIO_PROJECTS = [
     ],
     type: "interactive",
   },
+  {
+    id: "fiserv",
+    title: "Fiserv Fund Hold Transparency",
+    subtitle: "Real-time hold intelligence — transforming opaque 'under review' messages into structured case management with resolution ETAs, document checklists, and merchant-safe status updates",
+    tags: ["Fintech", "Payments", "Risk Engineering", "Merchant Experience", "Event-Driven Architecture"],
+    date: "May 2026",
+    description: "A multi-sprint product build tackling merchant fund hold opacity at Fiserv. When funds are held — for chargeback risk, volume spikes, new account reviews, or manual flags — merchants see a generic 'under review' with zero visibility into progress, required documents, or expected resolution. 37.6K holds per month with 5.8-day average resolution and 23% never actively worked. This solution builds a decoupled Hold Case service: structured hold_type enum, event-driven case creation, idempotent listeners, ML-powered resolution ETAs, and a content policy that balances merchant transparency with fraud detection confidentiality.",
+    highlights: [
+      "Sprint 1: Schema audit revealing 6-8 missing fields per hold type, normalized Hold Case data model (12 fields, 2 enums, 4 indexes), idempotent event listener with full integration test coverage",
+      "Event-driven architecture: Kafka consumer with 3-tier retry policy, DLQ routing, and idempotency guarantees via risk_event_id + merchant_id composite key",
+      "Content policy sign-off: 4-stakeholder alignment on what merchants can see per hold_type without exposing detection logic that enables adversarial circumvention",
+      "API contract design: merchant-safe by default — internal callers get full detail, merchant-facing endpoints redact triggering_rule_id and confidence_score",
+    ],
+    type: "interactive",
+  },
 ];
 
 export default function Portfolio() {
@@ -1027,6 +1046,7 @@ export default function Portfolio() {
   const [amexSprint, setAmexSprint] = useState("sprint1");
   const [pinelabsSprint, setPinelabsSprint] = useState("sprint1");
   const [docusignSprint, setDocusignSprint] = useState("sprint1");
+  const [fiservSprint, setFiservSprint] = useState("sprint1");
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -1210,6 +1230,8 @@ export default function Portfolio() {
                 ? "linear-gradient(135deg, rgba(5,150,105,0.12) 0%, rgba(16,185,129,0.08) 50%, rgba(52,211,153,0.05) 100%)"
                 : project.id === "docusign"
                 ? "linear-gradient(135deg, rgba(217,119,6,0.12) 0%, rgba(245,158,11,0.08) 50%, rgba(252,211,77,0.05) 100%)"
+                : project.id === "fiserv"
+                ? "linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(59,130,246,0.08) 50%, rgba(16,185,129,0.05) 100%)"
                 : "linear-gradient(135deg, rgba(255,77,103,0.1) 0%, rgba(124,92,252,0.1) 50%, rgba(0,212,170,0.05) 100%)",
             }} />
             {/* Company logo */}
@@ -1297,12 +1319,28 @@ export default function Portfolio() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>Docusign</span>
                 </div>
               )}
+              {project.id === "fiserv" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: 8,
+                    background: "linear-gradient(135deg, #F97316, #EA580C)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 10, color: "#fff", fontWeight: 900, letterSpacing: 0.5,
+                  }}>FV</div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.8)", letterSpacing: 0.3 }}>Fiserv</span>
+                </div>
+              )}
             </div>
             <div style={{
               display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
               padding: 20, width: "90%", opacity: 0.85,
             }}>
-              {(project.id === "gobblecube" ? [
+              {(project.id === "fiserv" ? [
+                { label: "Holds/Mo", value: "37.6K", color: "#F97316" },
+                { label: "Avg Days", value: "5.8", color: "#EF4444" },
+                { label: "Unworked", value: "23%", color: "#F59E0B" },
+                { label: "Sprints", value: "5", color: "#10B981" },
+              ] : project.id === "gobblecube" ? [
                 { label: "Revenue", value: "₹83L", color: "#22C55E" },
                 { label: "Leaks", value: "₹12L", color: "#EF4444" },
                 { label: "Channels", value: "4", color: "#7B2FF7" },
@@ -1696,6 +1734,9 @@ export default function Portfolio() {
                 {[
                   { key: "sprint1", label: "Sprint 1 — Empathize + Define" },
                   { key: "sprint2", label: "Sprint 2 — Ideate + Prototype" },
+                  { key: "sprint3", label: "Sprint 3 — Build + Trace" },
+                  { key: "sprint4", label: "Sprint 4 — Test + Iterate" },
+                  { key: "sprint5", label: "Sprint 5 — Validate + Scale" },
                 ].map(sp => (
                   <button
                     key={sp.key}
@@ -1712,6 +1753,31 @@ export default function Portfolio() {
               </div>
               {docusignSprint === "sprint1" && <Sprint1AttributionGap />}
               {docusignSprint === "sprint2" && <Sprint2AgentArchitecture />}
+              {docusignSprint === "sprint3" && <Sprint3AgentWorkflow />}
+              {docusignSprint === "sprint4" && <Sprint4Evaluations />}
+              {docusignSprint === "sprint5" && <Sprint5BusinessCase />}
+            </div>
+          )}
+          {project.id === "fiserv" && (
+            <div>
+              <div style={{ display: "flex", gap: 6, marginBottom: 20, flexWrap: "wrap" }}>
+                {[
+                  { key: "sprint1", label: "Sprint 1 — Hold Detection & Data Model" },
+                ].map(sp => (
+                  <button
+                    key={sp.key}
+                    onClick={() => setFiservSprint(sp.key)}
+                    style={{
+                      padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer",
+                      fontSize: 11, fontWeight: 600, letterSpacing: 0.5,
+                      background: fiservSprint === sp.key ? "#F97316" : "#f0f0f0",
+                      color: fiservSprint === sp.key ? "#fff" : "#666",
+                      transition: "all 0.2s",
+                    }}
+                  >{sp.label}</button>
+                ))}
+              </div>
+              {fiservSprint === "sprint1" && <Sprint1HoldDetection />}
             </div>
           )}
         </div>
