@@ -1503,10 +1503,8 @@ export default function Portfolio() {
           <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "#BBB", marginBottom: 12 }}>Skills</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {[
-              "SQL & Python (hands-on analytics)",
               "AI prototyping (LLMs, no-code, scripts)",
               "PRDs, wireframes, user stories",
-              "Feed ranking & recommendation systems",
               "A/B testing & experiment design",
               "User research across Tier 1-3 India",
             ].map(s => (
@@ -1520,9 +1518,7 @@ export default function Portfolio() {
         <div>
           <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "#BBB", marginBottom: 12 }}>Background</div>
           <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, margin: 0 }}>
-            11+ years in tech — from test automation frameworks at Oracle and Accenture
-            to owning quality strategy for B2B SaaS platforms. MSc from NUI Galway.
-            Now channeling that systems-thinking into consumer product building for India's next billion users.
+            11+ years of experience within tech owning product strategy and lifecycle — from defining roadmaps and leading discovery to shipping 0→1 products and scaling them across enterprise and consumer markets. MSc from NUI Galway. Deep expertise in translating user problems into measurable outcomes across B2B SaaS.
           </p>
         </div>
       </div>
