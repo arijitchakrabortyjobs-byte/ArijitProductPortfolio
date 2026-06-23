@@ -26,6 +26,7 @@ import Sprint3ReconciliationDashboard from "./pinelabs/Sprint3ReconciliationDash
 import Sprint4DisputeResolution from "./pinelabs/Sprint4DisputeResolution";
 import PinelabsSprint5BusinessValidation from "./pinelabs/Sprint5BusinessValidation";
 import Sprint1HoldDetection from "./fiserv/Sprint1HoldDetection";
+import MakeMyTripDashboard from "./makemytrip/MakeMyTripDashboard";
 
 const {
   AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -1034,6 +1035,22 @@ const PORTFOLIO_PROJECTS = [
     ],
     type: "interactive",
   },
+  {
+    id: "makemytrip",
+    title: "MakeMyTrip AI-Powered Ground Transport Discovery",
+    subtitle: "AI personalized bus ranking engine — 6-sprint roadmap, 24 user stories, ML learning-to-rank model for Tier 2/3 India",
+    company: "MakeMyTrip",
+    role: "Product Manager (Ground Transport) · RL4",
+    tags: ["Consumer Product", "AI/ML", "Personalization", "Tier 2/3 India", "A/B Experimentation"],
+    highlights: [
+      "Identified booking discovery & conversion drop-off as #1 problem: overall Search→Paid at 12.96% with Seat Map as biggest drop-off (45% conversion)",
+      "Designed 3-phase, 6-sprint roadmap: rule-based ranking → ML LambdaMART model → Tier 2/3 tuning & full rollout",
+      "Built cold-start formula for 65% of users with zero history: 0.40×popularity + 0.35×reliability + 0.25×time-fit",
+      "Defined 12-signal inventory with correlation analysis; shortlisted top 8 for ML model training",
+      "A/B framework with user-level hashing, guardrail auto-pause, 95% confidence threshold before full rollout",
+    ],
+    type: "interactive",
+  },
 ];
 
 export default function Portfolio() {
@@ -1606,6 +1623,7 @@ export default function Portfolio() {
           }}>Interactive Dashboard</div>
           {project.id === "sharechat" && <ShareChatDashboard />}
           {project.id === "gobblecube" && <GobbleCubeDashboard />}
+          {project.id === "makemytrip" && <MakeMyTripDashboard />}
           {project.id === "mastercard" && (
             <div>
               <div style={{ display: "flex", gap: 6, marginBottom: 20 }}>
