@@ -52,9 +52,9 @@ export const sprintRoadmap = [
     theme: "Move from rules to intelligence",
     color: "#a855f7",
     stories: [
-      { id: "US-3.1", title: "Train LambdaMART Model", status: "upcoming" },
-      { id: "US-3.2", title: "Model Serving API", status: "upcoming" },
-      { id: "US-3.3", title: "Auto Retraining Pipeline", status: "upcoming" },
+      { id: "US-3.1", title: "Train LambdaMART Model", status: "done" },
+      { id: "US-3.2", title: "Model Serving API", status: "done" },
+      { id: "US-3.3", title: "Auto Retraining Pipeline", status: "done" },
     ],
   },
   {
@@ -64,10 +64,10 @@ export const sprintRoadmap = [
     theme: "Make personalization visible",
     color: "#ec4899",
     stories: [
-      { id: "US-4.1", title: "'Picked for You' Label", status: "upcoming" },
-      { id: "US-4.2", title: "Preference Reset Control", status: "upcoming" },
-      { id: "US-4.3", title: "Cold-Start Ranking UI", status: "upcoming" },
-      { id: "US-4.4", title: "Vernacular Localisation", status: "upcoming" },
+      { id: "US-4.1", title: "'Picked for You' Label", status: "done" },
+      { id: "US-4.2", title: "Preference Reset Control", status: "done" },
+      { id: "US-4.3", title: "Cold-Start Ranking UI", status: "done" },
+      { id: "US-4.4", title: "Vernacular Localisation", status: "done" },
     ],
   },
   {

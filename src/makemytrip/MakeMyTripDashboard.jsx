@@ -6,6 +6,8 @@ import {
   rankingRules,
   coldStartFormula,
 } from "./mockData";
+import Sprint3MLModel from "./Sprint3MLModel";
+import Sprint4UI from "./Sprint4UI";
 
 const ACCENT = "#6366f1";
 const CARD_BG = "#1e1b4b";
@@ -232,6 +234,8 @@ export default function MakeMyTripDashboard() {
   const tabs = [
     { id: "sprint1", label: "Sprint 1 — Foundation" },
     { id: "sprint2", label: "Sprint 2 — Ranking v1" },
+    { id: "sprint3", label: "Sprint 3 — ML Model" },
+    { id: "sprint4", label: "Sprint 4 — UI & Cold Start" },
     { id: "roadmap", label: "Full Roadmap" },
   ];
 
@@ -245,7 +249,7 @@ export default function MakeMyTripDashboard() {
               MakeMyTrip · PM Portfolio
             </div>
             <div style={{ background: "#34d39922", color: "#34d399", border: "1px solid #34d39944", borderRadius: 999, padding: "3px 10px", fontSize: 11, fontWeight: 600 }}>
-              Sprints 1 & 2 Implemented
+              Sprints 1–4 Implemented
             </div>
           </div>
           <h1 style={{ fontSize: 26, fontWeight: 800, color: "#fff", margin: "0 0 6px" }}>
@@ -303,6 +307,8 @@ export default function MakeMyTripDashboard() {
               <RankingRulesSection />
             </>
           )}
+          {activeTab === "sprint3" && <Sprint3MLModel />}
+          {activeTab === "sprint4" && <Sprint4UI />}
           {activeTab === "roadmap" && (
             <>
               <SprintRoadmap />
